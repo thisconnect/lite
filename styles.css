@@ -1,0 +1,50 @@
+body {
+	font-family: Arial;
+	font-size: 12px;
+	margin: 0;
+	padding: 0;
+}
+
+#status {
+	background: #000;
+	color: #fff;
+	padding: 10px;
+}
+
+#instrument-new {
+	float: right;
+}
+
+#instruments {
+	padding: 10px;
+}
+
+.instrument {
+	border: 1px solid #000;
+	display: inline-block;
+	margin: 5px;
+	padding: 10px;
+	width: 300px;
+}
+
+.instrument h1 {
+	font-size: 14px;
+	margin: 0;
+}
+
+.controller {
+	padding: 5px;
+	position: relative;
+	margin: 5px;
+}
+
+.curtain {
+	background: #000;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	opacity: 0.5;
+	display: none;
+}

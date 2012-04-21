@@ -1,81 +1,32 @@
 <!DOCTYPE HTML>
-<html lang="en">
+<html lang=en>
 <head>
-	<meta charset="UTF-8">
-	<title></title>
-	<style type="text/css">
-		body {
-			font-family: Arial;
-			font-size: 12px;
-			margin: 0;
-			padding: 0;
-		}
-
-		#status {
-			background: #000;
-			color: #fff;
-			padding: 10px;
-		}
-
-		#instrument-new {
-			float: right;
-		}
-
-		#instruments {
-			padding: 10px;
-		}
-
-		.instrument {
-			border: 1px solid #000;
-			display: inline-block;
-			margin: 5px;
-			padding: 10px;
-			width: 300px;
-		}
-
-		.instrument h1 {
-			font-size: 14px;
-		}
-
-		.controller {
-			padding: 5px;
-			position: relative;
-			margin: 5px;
-		}
-
-		.curtain {
-			background: #000;
-			position: absolute;
-			top: 0;
-			bottom: 0;
-			left: 0;
-			right: 0;
-			opacity: 0.5;
-			display: none;
-		}
-	</style>
-	<script type="text/javascript" src="http://localhost:8999/socket.io/socket.io.js"></script>
-	<script type="text/javascript" src="scripts/mootools.js"></script>
-	<script type="text/javascript" src="scripts/utils.js"></script>
-	<script type="text/javascript" src="scripts/company.js"></script>
-	<script type="text/javascript" src="scripts/ui.js"></script>
-	<script type="text/javascript" src="scripts/controllers.js"></script>
-	<script type="text/javascript" src="scripts/builder.js"></script>
-	<script type="text/javascript" src="scripts/selector.js"></script>
-	<script type="text/javascript" src="scripts/loader.js"></script>
-	<script type="text/javascript" src="scripts/connect.js"></script>
+	<meta charset="utf-8">
+	<title>Satellite</title>
+	<link rel=stylesheet href="styles.css">
+	
+	<script src="http://localhost:8999/socket.io/socket.io.js"></script>
+	<script src="mootools-core-1.4.5-full-nocompat-yc.js"></script>
+	<script src="scripts/company.js"></script>
+	<script src="scripts/utils.js"></script>
+	<script src="scripts/ui.js"></script>
+	<script src="scripts/controller.js"></script>
+	<script src="scripts/controllers.js"></script>
+	<script src="scripts/builder.js"></script>
+	<script src="scripts/selector.js"></script>
+	<script src="scripts/loader.js"></script>
+	<script src="scripts/connect.js"></script>
 </head>
 <body>
-	<header id="status">
-		<div id="instrument-new">
+	<header id=status>
+		<div id=instrument-new>
 			<label>Create new:
-				<select id="instrument-list">
-				</select>
-				<button id="instrument-create">Go</button>
+				<select id=instrument-list></select>
 			</label>
+			<button id=instrument-create>Go</button>
 		</div>
-		Planet Client: <span id="conn-status">Disconnected</span>
+		Planet Client: <span id=conn-status>Disconnected</span>
 	</header>
-	<div id="instruments"></div>
+	<div id=instruments></div>
 </body>
 </html>
