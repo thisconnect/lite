@@ -1,5 +1,3 @@
-(function(){
-
 new Unit({
 	
 	Prefix: 'planet',
@@ -16,7 +14,6 @@ new Unit({
 		socket.on('connect', this.onConnect.bind(this));
 		socket.on('message', this.onMessage.bind(this));
 		socket.on('disconnect', this.onDisconnect.bind(this));
-		//socket.connect();
 	},
 
 	onConnect: function(){
@@ -30,6 +27,7 @@ new Unit({
 		if (data == null) return this;
 		switch (data.type){
 			case 'initial_state':
+				console.log('payload', data.payload);
 			break;
 
 			case 'state_update':
@@ -56,7 +54,6 @@ new Unit({
 		for (var i in data){
 			if (data.hasOwnProperty(i)) this.publish('stateupdate.' + i, data[i]);
 		}
-
 		return this;
 	},
 
@@ -65,14 +62,11 @@ new Unit({
 	},
 
 	send: function(type, payload){
-		var data = JSON.encode({
+		this.socket.send(JSON.encode({
 			type: type,
 			payload: payload
-		});
-		this.socket.send(data);
+		}));
 		return this;
 	}
 
 });
-
-})();

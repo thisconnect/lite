@@ -26,8 +26,7 @@ var Widget = this.Widget = new Class({
 	},
 
 	build: function(){
-		var container = this.element = new Element('div', {
-			'class': 'instrument',
+		var container = this.element = new Element('div.instrument', {
 			'data-id': this.id
 		});
 		new Element('h1', {text: this.label}).inject(container);
@@ -70,8 +69,7 @@ var Widget = this.Widget = new Class({
 		return this;
 	},
 
-	onControllerChange: function(name, value){
-	},
+	onControllerChange: function(name, value){},
 
 	onControllerQuickChange: function(name, value){
 		var id = [this.id, name].join(':');

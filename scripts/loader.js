@@ -1,9 +1,3 @@
-/** 
- * Loader Unit
- */
-
-(function(){
-
 new Unit({
 
 	descriptorDir: 'instruments',
@@ -52,5 +46,3 @@ new Unit({
 	}
 
 });
-
-})();

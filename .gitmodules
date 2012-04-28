@@ -1,0 +1,3 @@
+[submodule "support/company"]
+	path = support/company
+	url = git://github.com/thisconnect/company.git

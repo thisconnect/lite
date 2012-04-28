@@ -6,16 +6,40 @@
 	<link rel=stylesheet href="styles.css">
 	
 	<script src="http://localhost:8999/socket.io/socket.io.js"></script>
-	<script src="mootools-core-1.4.5-full-nocompat-yc.js"></script>
-	<script src="scripts/company.js"></script>
+	<script src="support/mootools-core-1.4.5-yc.js"></script>
+	<script src="support/company/Source/Company.js"></script>
 	<script src="scripts/utils.js"></script>
 	<script src="scripts/ui.js"></script>
 	<script src="scripts/controller.js"></script>
-	<script src="scripts/controllers.js"></script>
+	<script src="scripts/controller.boolean.js"></script>
+	<script src="scripts/controller.int.js"></script>
 	<script src="scripts/builder.js"></script>
 	<script src="scripts/selector.js"></script>
 	<script src="scripts/loader.js"></script>
 	<script src="scripts/connect.js"></script>
+	<script>
+		new Unit({
+			initSetup: function(){
+				this.subscribe({
+					'planet.connect': function(){
+						console.log('planet.connect');
+					},
+					'planet.disconnect': function(){
+						console.log('planet.disconnect');
+					},
+					'descriptor.new': function(name, data){
+						console.log('descriptor.new', name, data);
+					},
+					'instrument.create': function(name, data){
+						console.log('instrument.create', name, data);
+					},
+					'widget.quickchange': function(id, value){
+						console.log('widget.quickchange', id, value);
+					}
+				});
+			}
+		});
+	</script>
 </head>
 <body>
 	<header id=status>

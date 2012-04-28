@@ -1,6 +1,4 @@
-(function(){
-
-var Controller = this.Controller = new Class({
+var Controller = new Class({
 
 	Implements: [Events, Bound],
 
@@ -12,11 +10,8 @@ var Controller = this.Controller = new Class({
 	},
 
 	build: function(){
-		var element = this.element = new Element('div', {
-			'class': 'controller'
-		});
-		this.curtain = new Element('div', {
-			'class': 'curtain',
+		var element = this.element = new Element('div.controller');
+		this.curtain = new Element('div.curtain', {
 			events: {
 				mousedown: function(e){
 					e.stopPropagation();
@@ -55,5 +50,3 @@ var Controller = this.Controller = new Class({
 	}
 
 });
-
-})();

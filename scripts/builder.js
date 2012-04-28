@@ -1,4 +1,4 @@
-var Builder = new Unit({
+new Unit({
 
 	initSetup: function(){
 		this.subscribe('descriptor.new', this.parse);

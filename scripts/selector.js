@@ -1,4 +1,4 @@
-var Selector = new Unit({
+new Unit({
 
 	instruments: {},
 
