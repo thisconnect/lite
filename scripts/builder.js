@@ -10,9 +10,6 @@ new Unit({
 	},
 
 	parse: function(name, data){
-		var parsers = this.parsers,
-			controllers = data.controllers;
-
 		new Widget(name, data.label, data.controllers).attach(this.container);
 	}
 

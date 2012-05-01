@@ -1,8 +1,6 @@
 new Unit({
 
 	instruments: {},
-
-	queue: new Element('select'),
 	
 	initSetup: function(){
 		this.subscribe('descriptor.new', this.parse);
@@ -15,21 +13,15 @@ new Unit({
 	},
 
 	parse: function(name, data){
-		var instruments = this.instruments,
-			queue = this.queue;
+		this.instruments[data.name] = data;
 
-		instruments[data.name] = data;
-
-		var instrument = new Element('option', {
+		new Element('option', {
 			value: data.name,
 			text: data.label
-		});
-
-		instrument.inject(this.element || queue);
+		}).inject(this.element);
 	},
 
 	build: function(){
-		this.element.adopt(this.queue.getElements('option'));
 		this.dispatcher.addEvent('click', this.create.bind(this));
 	},
 

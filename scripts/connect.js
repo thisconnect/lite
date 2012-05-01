@@ -12,7 +12,8 @@ new Unit({
 		this.status = document.id('conn-status');
 		var socket = this.socket = io.connect('http://localhost:8999');
 		socket.on('connect', this.onConnect.bind(this));
-		socket.on('message', this.onMessage.bind(this));
+		//socket.on('initial state', this.onInitalState.bind(this));
+		socket.on('state update', this.onStateUpdate.bind(this));
 		socket.on('disconnect', this.onDisconnect.bind(this));
 	},
 
@@ -22,20 +23,6 @@ new Unit({
 		this.publish('connect');
 	},
 
-	onMessage: function(data){
-		data = JSON.decode(data);
-		if (data == null) return this;
-		switch (data.type){
-			case 'initial_state':
-				console.log('payload', data.payload);
-			break;
-
-			case 'state_update':
-				this.onStateUpdate(data.payload);
-			break;
-		}
-	},
-
 	onDisconnect: function(){
 		this.connected = false;
 		this.setStatus('Disconnected');
@@ -43,7 +30,7 @@ new Unit({
 	},
 
 	onWidgetQuickChange: function(name, value){
-		this.send('attempt_update', {
+		this.send('update', {
 			component: name,
 			payload: value
 		});
@@ -62,10 +49,7 @@ new Unit({
 	},
 
 	send: function(type, payload){
-		this.socket.send(JSON.encode({
-			type: type,
-			payload: payload
-		}));
+		this.socket.emit(type, payload);
 		return this;
 	}
 
