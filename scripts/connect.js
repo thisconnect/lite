@@ -1,5 +1,5 @@
 new Unit({
-	
+
 	Prefix: 'planet',
 
 	initSetup: function(){
@@ -29,27 +29,32 @@ new Unit({
 		this.publish('disconnect');
 	},
 
-	onWidgetQuickChange: function(name, value){
+	onWidgetQuickChange: function(name, data){
 		this.send('update', {
-			component: name,
-			payload: value
+			key: name,
+			value: data
 		});
 		return this;
 	},
 
 	onStateUpdate: function(data){
+		this.publish('stateupdate.' + data.key, data.value);
+		return this;
+	},
+/*
+	onCreate: function(data){
 		for (var i in data){
 			if (data.hasOwnProperty(i)) this.publish('stateupdate.' + i, data[i]);
 		}
 		return this;
 	},
-
+*/
 	setStatus: function(status){
 		this.status.set('text', status);
 	},
 
-	send: function(type, payload){
-		this.socket.emit(type, payload);
+	send: function(type, data){
+		this.socket.emit(type, data);
 		return this;
 	}
 
