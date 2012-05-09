@@ -22,10 +22,11 @@ new Unit({
 	},
 
 	build: function(){
-		this.dispatcher.addEvent('click', this.create.bind(this));
+		this.dispatcher.addEvent('click', this.onCreate.bind(this));
+		return this;
 	},
 
-	create: function(){
+	onCreate: function(){
 		var name = this.element.value;
 		this.publish('instrument.create', [name, this.instruments[name]]);
 	}

@@ -27,7 +27,6 @@ Controller.Boolean = new Class({
 
 	onChange: function(value){
 		if (this.isEnabled()) this.fireEvent('quickchange', value);
-		return this;
 	},
 
 	set: function(value){

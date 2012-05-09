@@ -34,12 +34,10 @@ new Unit({
 			key: name,
 			value: data
 		});
-		return this;
 	},
 
 	onStateUpdate: function(data){
 		this.publish('stateupdate.' + data.key, data.value);
-		return this;
 	},
 /*
 	onCreate: function(data){
@@ -51,6 +49,7 @@ new Unit({
 */
 	setStatus: function(status){
 		this.status.set('text', status);
+		return this;
 	},
 
 	send: function(type, data){
