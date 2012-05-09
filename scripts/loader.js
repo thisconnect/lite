@@ -4,7 +4,7 @@ new Unit({
 
 	initSetup: function(){
 		this.setDir(this.descriptorDir);
-		this.loadManifest();
+		this.load('manifest.json', this.parseManifest);
 	},
 	
 	setDir: function(descriptors){
@@ -12,11 +12,11 @@ new Unit({
 		return this;
 	},
 
-	loadManifest: function(){
+	load: function(file, callback){
 		new Request({
-			url: this.url + 'manifest.json',
+			url: this.url + file,
 			method: 'get',
-			onSuccess: this.parseManifest.bind(this)
+			onSuccess: callback.bind(this)
 		}).send();
 	},
 
@@ -24,16 +24,8 @@ new Unit({
 		data = JSON.decode(data);
 		if (!data) return null;
 
-		for (var i = 0, l = data.length; i < l; i++) this.loadDescriptor(data[i]);
+		for (var i = 0, l = data.length; i < l; i++) this.load(data[i], this.parseDescriptor);
 		return this;
-	},
-
-	loadDescriptor: function(descriptor){
-		new Request({
-			url: this.url + descriptor,
-			method: 'get',
-			onSuccess: this.parseDescriptor.bind(this)
-		}).send();
 	},
 
 	parseDescriptor: function(data){
