@@ -1,3 +1,7 @@
+(function(){
+
+var counter = {};
+
 new Unit({
 
 	initSetup: function(){
@@ -11,8 +15,10 @@ new Unit({
 	},
 
 	parse: function(name, data){
-		new Widget(name, data.label, data.controllers).attach(this.container);
+		if (!counter[name]) counter[name] = 0;
+		new Widget(name + '-' + (++counter[name]), data.label, data.controllers).attach(this.container);
 	}
 
 });
 
+})();

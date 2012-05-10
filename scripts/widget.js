@@ -1,8 +1,4 @@
-(function(){
-
-var counter = {};
-
-var Widget = this.Widget = new Class({
+var Widget = new Class({
 	
 	Implements: Unit,
 
@@ -20,8 +16,7 @@ var Widget = this.Widget = new Class({
 	},
 
 	register: function(name){
-		if (!counter[name]) counter[name] = 0;
-		this.id = name + '-' + (++counter[name]);
+		this.id = name;
 		return this;
 	},
 
@@ -81,5 +76,3 @@ var Widget = this.Widget = new Class({
 	}
 
 });
-
-})();
