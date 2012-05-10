@@ -1,0 +1,23 @@
+{
+	"name": "instrument-a",
+	"label": "Instrument A",
+	"controllers": [{
+		"name": "controller-a",
+		"label": "Controller A",
+		"type": "int",
+		"range": [1, 100]
+	}, {
+		"name": "controller-b",
+		"label": "Controller B",
+		"type": "boolean"
+	}, {
+		"name": "controller-c",
+		"label": "Controller C",
+		"type": "boolean"
+	}],
+    "model": {
+        "controller-a": 20,
+        "controller-b": false,
+        "controller-c": true
+    }
+}
