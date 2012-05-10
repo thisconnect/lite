@@ -22,19 +22,19 @@
 			initSetup: function(){
 				this.subscribe({
 					'planet.connect': function(){
-						console.log('planet.connect');
+						//console.log('planet.connect');
 					},
 					'planet.disconnect': function(){
-						console.log('planet.disconnect');
+						//console.log('planet.disconnect');
 					},
 					'descriptor.new': function(name, data){
-						console.log('descriptor.new', name, data);
+						//console.log('descriptor.new', name, data);
 					},
 					'instrument.create': function(name, data){
-						console.log('instrument.create', name, data);
+						//console.log('instrument.create', name, data);
 					},
 					'widget.quickchange': function(id, value){
-						console.log('widget.quickchange', id, value);
+						//console.log('widget.quickchange', id, value);
 					}
 				});
 			}

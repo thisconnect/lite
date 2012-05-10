@@ -18,13 +18,15 @@ new Unit({
 			method: 'get',
 			onSuccess: callback.bind(this)
 		}).send();
+		return this;
 	},
 
 	parseManifest: function(data){
+		var i;
 		data = JSON.decode(data);
 		if (!data) return null;
-
-		for (var i = 0, l = data.length; i < l; i++) this.load(data[i], this.parseDescriptor);
+		i = this.queue = data.length;
+		while (i--) this.load(data[i], this.parseDescriptor);
 		return this;
 	},
 
@@ -34,6 +36,7 @@ new Unit({
 
 		data.name = data.name.toLowerCase();
 		this.publish('descriptor.new', [data.name, data]);
+		if (--this.queue == 0) this.publish('descriptor ready');
 		return this;
 	}
 

@@ -11,13 +11,13 @@ var Controller = new Class({
 
 	build: function(){
 		var element = this.element = new Element('div.controller');
-		this.curtain = new Element('div.curtain', {
+		/*this.curtain = new Element('div.curtain', {
 			events: {
 				mousedown: function(e){
 					e.stopPropagation();
 				}
 			}
-		}).inject(element);
+		}).inject(element);*/
 		return this;
 	},
 

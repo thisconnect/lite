@@ -16,6 +16,6 @@
 		"name": "controller-c",
 		"label": "Controller C",
 		"type": "boolean",
-		"value": false
+		"value": true
 	}]
 }
