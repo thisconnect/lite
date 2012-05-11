@@ -6,7 +6,7 @@ new Unit({
 		this.setDir(this.descriptorDir);
 		this.load('manifest.json', this.parseManifest);
 	},
-	
+
 	setDir: function(descriptors){
 		this.url = '/' + descriptors + '/';
 		return this;
@@ -22,10 +22,9 @@ new Unit({
 	},
 
 	parseManifest: function(data){
-		var i;
 		data = JSON.decode(data);
 		if (!data) return null;
-		i = this.queue = data.length;
+		var i = this.queue = data.length;
 		while (i--) this.load(data[i], this.parseDescriptor);
 		return this;
 	},

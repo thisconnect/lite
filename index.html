@@ -22,10 +22,10 @@
 			initSetup: function(){
 				this.subscribe({
 					'planet.connect': function(){
-						//console.log('planet.connect');
+						this.setStatus('Connected');
 					},
 					'planet.disconnect': function(){
-						//console.log('planet.disconnect');
+						this.setStatus('Disconnected');
 					},
 					'descriptor.new': function(name, data){
 						//console.log('descriptor.new', name, data);
@@ -37,6 +37,13 @@
 						//console.log('widget.quickchange', id, value);
 					}
 				});
+			},
+			readySetup: function(){
+				this.status = document.id('conn-status');
+			},
+			setStatus: function(status){
+				this.status.set('text', status);
+				return this;
 			}
 		});
 	</script>
