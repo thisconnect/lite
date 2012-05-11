@@ -10,21 +10,18 @@ Controller.Int = new Class({
 	},
 
 	build: function(){
-		var self = this;
-		this.parent();
-
-		var label = new Element('label', {
-			text: this.label
-		});	
-
-		var control = this.control = new Element('input', {
-			value: this.value,
-			events: {
-				change: function(e){
-					self.onChange(this.value);
+		var self = this,
+			label = new Element('label', {
+				text: this.label
+			}),
+			control = this.control = new Element('input', {
+				value: this.value,
+				events: {
+					change: function(e){
+						self.onChange(this.value);
+					}
 				}
-			}
-		});
+			});
 
 		if (typeOf(this.range) == 'array'){
 			control.set({
@@ -34,6 +31,7 @@ Controller.Int = new Class({
 			});
 		}
 
+		this.parent();
 		this.element.adopt(label, control);
 	},
 

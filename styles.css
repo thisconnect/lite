@@ -20,7 +20,7 @@ body {
 	padding: 10px;
 }
 
-.instrument {
+.widget {
 	border: 1px solid #000;
 	display: inline-block;
 	margin: 5px;
@@ -28,7 +28,7 @@ body {
 	width: 300px;
 }
 
-.instrument h1 {
+.widget h1 {
 	font-size: 14px;
 	margin: 0;
 }

@@ -1,13 +1,18 @@
-(function(){
-
-var counter = {};
-
 new Unit({
+	
+	counter: 0,
+
+	widgets: {},
+	
+	queue: {},
 
 	initSetup: function(){
-		//this.subscribe('descriptor.new', this.parse);
-		//this.subscribe('instrument.create', this.parse);
-		this.subscribe('instrument.create', this.parse);
+		this.subscribe({
+			'descriptor ready': this.readyDescriptor,
+			'descriptor.new': this.parse,
+			'planet.descriptor select': this.onSelect,
+			'widget create': this.onCreate
+		});
 	},
 
 	readySetup: function(){
@@ -15,10 +20,36 @@ new Unit({
 	},
 
 	parse: function(name, data){
-		if (!counter[name]) counter[name] = 0;
-		new Widget(name + '-' + (++counter[name]), data.label, data.controllers).attach(this.container);
+		this.widgets[data.name] = data;
+	},
+
+	readyDescriptor: function(){
+		for (var i in this.queue){
+			if (this.widgets[i]) this.onWidgetCreate(this.widgets[i].name, this.widgets[i]);
+		}
+	},
+
+	onCreate: function(name){
+		var data = {},
+			controls = this.widgets[name].controllers;
+		data[name] = {};
+
+		// change json files to have a model object containing all controls
+		for (var i in controls){
+			if (controls.hasOwnProperty(i)){
+				data[name][controls[i].name] = controls[i].value;
+			}
+		}
+		this.publish('put', [data]);
+	},
+
+	onWidgetCreate: function(name, data){
+		new Widget(++this.counter, data).attach(this.container);
+	},
+
+	onSelect: function(name, data){
+		if (!this.widgets[name]) this.queue[name] = data;
+		else this.onWidgetCreate(name, this.widgets[name]);
 	}
 
 });
-
-})();

@@ -4,24 +4,19 @@ var Widget = new Class({
 
 	Prefix: 'widget',
 
-	initialize: function(name, label, controllers){
+	initialize: function(id, data){
 		this.setupUnit();
-		this.name = name;
-		this.label = label;
-		this.controllers = controllers;
+		this.id = id;
+		this.name = data.name;
+		this.label = data.label;
+		this.controllers = data.controllers;
 
-		this.register(name);
 		this.build();
 		this.buildControllers();
 	},
 
-	register: function(name){
-		this.id = name;
-		return this;
-	},
-
 	build: function(){
-		var container = this.element = new Element('div.instrument', {
+		var container = this.element = new Element('div.widget', {
 			'data-id': this.id
 		});
 		new Element('h1', {text: this.label}).inject(container);
@@ -33,22 +28,16 @@ var Widget = new Class({
 		var self = this,
 			map = {},
 			controllers = this.controllers,
-			len = controllers.length;
+			l = controllers.length;
 
-		while (len--) (function(controller){
-			var item = new Controller(controller.type, controller);
-			item.addEvents({
-				'change': function(value){
-					self.onControllerChange(controller.name, value);
-				},
-				'quickchange': function(value){
-					self.onControllerQuickChange(controller.name, value);
-				}
+		while (l--) (function(controller){
+			var item = map[controller.name] = new Controller(controller.type, controller);
+			item.addEvent('quickchange', function(value){
+				self.onControllerQuickChange(controller.name, value);
 			}).attach(self.controlContainer);
-			map[controller.name] = item;
 
-			self.subscribe('planet.stateupdate.' + [self.id, controller.name].join(':'), self.onStateUpdate.bind(item));
-		})(controllers[len]);
+			self.subscribe('planet.update.' + [self.id, self.name, controller.name].join('.'), self.onStateUpdate.bind(item));
+		})(controllers[l]);
 
 		this.controllers = map;
 		return this;
@@ -64,11 +53,8 @@ var Widget = new Class({
 		return this;
 	},
 
-	onControllerChange: function(name, value){},
-
 	onControllerQuickChange: function(name, value){
-		var id = [this.id, name].join(':');
-		this.publish('quickchange', [id, value]);
+		this.publish('update', {'path': [this.id, this.name, name], 'value': value});
 	},
 
 	onStateUpdate: function(value){

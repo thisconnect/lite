@@ -5,7 +5,10 @@ new Unit({
 	initSetup: function(){
 		this.subscribe({
 			'widget.quickchange': this.onWidgetQuickChange,
-			'widget create': this.onWidgetCreate
+			'update': this.update,
+			'widget.update': this.update,
+			'put': this.put,
+			'widget.put': this.put
 		});
 	},
 
@@ -17,6 +20,16 @@ new Unit({
 		socket.on('put', this.onPut.bind(this));
 		socket.on('state update', this.onStateUpdate.bind(this));
 		socket.on('disconnect', this.onDisconnect.bind(this));
+	},
+
+	put: function(data){
+		this.socket.emit('put', data);
+		return this;
+	},
+
+	update: function(data){
+		this.socket.emit('update', data);
+		return this;
 	},
 
 	onConnect: function(){
@@ -31,10 +44,6 @@ new Unit({
 		this.publish('disconnect');
 	},
 
-	onWidgetCreate: function(data){
-		this.send('put', data);
-	},
-
 	onPut: function(data){
 		for (var i in data){
 			if (data.hasOwnProperty(i)){
@@ -44,23 +53,21 @@ new Unit({
 	},
 
 	onWidgetQuickChange: function(name, data){
-		this.send('update', {
+		this.update({
 			key: name,
 			value: data
 		});
 	},
 
 	onStateUpdate: function(data){
-		this.publish('stateupdate.' + data.key, data.value);
+		if (data.key != null) this.publish('update.' + data.key, data.value);
+		if (typeof data.path != 'string') data.path = data.path.join('.');
+		console.log('update.' + data.path, data.value);
+		this.publish('update.' + data.path, data.value);
 	},
 
 	setStatus: function(status){
 		this.status.set('text', status);
-		return this;
-	},
-
-	send: function(type, data){
-		this.socket.emit(type, data);
 		return this;
 	}
 
