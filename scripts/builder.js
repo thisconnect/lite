@@ -22,10 +22,7 @@ new Unit({
 	},
 
 	readyDescriptor: function(){
-		console.log('readyDescriptor', this.queue);
-		for (var i in this.queue){
-			if (this.widgets[i]) this.onCreate(this.widgets[i].name, this.widgets[i]);
-		}
+		this.onPut(this.queue);
 	},
 
 	create: function(name){
@@ -34,7 +31,7 @@ new Unit({
 			controls = this.widgets[name].controllers;
 
 		point = point[name] = {};
-	//	should put default controller data
+	//	TODO: should put default controller data on the planet
 	//	for (var i in controls){
 	//		if (controls.hasOwnProperty(i)){
 	//			point[controls[i].name] = controls[i].value;
@@ -46,26 +43,20 @@ new Unit({
 	onPut: function(data){
 		for (var pos in data){
 			for (var name in data[pos]){
-				if (this.widgets[name]) this.onCreate(pos, this.widgets[name]);
-				else this.queue[pos] = data[pos];
-				console.log(data[pos][name]);
+				if (!this.widgets[name]) this.queue[pos] = data[pos];
+				else {
+					this.onCreate(pos, this.widgets[name]);
+					// TODO: remove this, should create widget with correct data
+					for (var control in data[pos][name]){
+						this.publish('planet.update.' + [pos, name, control].join('.'), data[pos][name][control]);
+					}
+				}
 			}
-		}
-		
-		console.log('onPut', pos, data);
-	
-		//if (!this.widgets[name]) this.queue[name] = data;
-		//else this.onWidgetCreate(name, this.widgets[name]);
-		for (var i in data){
-			if (!this.widgets[i]) this.queue[i] = data[i];
-			else this.onCreate(pos, this.widgets[i]);
-			console.log('onPut item', pos, i, data[i]);
 		}
 	},
 
 	onCreate: function(pos, data){
-		console.log('onCreate', pos, data);
-		//new Widget(pos, data).attach(this.container);
+		new Widget(pos, data).attach(this.container);
 		this.counter++;
 	}
 

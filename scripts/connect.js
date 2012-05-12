@@ -4,7 +4,6 @@ new Unit({
 
 	initSetup: function(){
 		this.subscribe({
-			//'widget.quickchange': this.onWidgetQuickChange,
 			'update': this.update,
 			'widget.update': this.update,
 			'put': this.put,
@@ -22,13 +21,11 @@ new Unit({
 	},
 
 	put: function(data){
-		//console.log('put', data);
 		this.socket.emit('put', data);
 		return this;
 	},
 
 	update: function(data){
-		//console.log('update', data);
 		this.socket.emit('update', data);
 		return this;
 	},
@@ -44,21 +41,12 @@ new Unit({
 	},
 
 	onPut: function(data){
-		//console.log('onPut', data);
 		this.publish('onPut', [data]);
 	},
-/*
-	onWidgetQuickChange: function(name, data){
-		this.update({
-			key: name,
-			value: data
-		});
-	},
-*/
+
 	onUpdate: function(data){
 		if (data.key != null) this.publish('update.' + data.key, data.value);
 		if (typeof data.path != 'string') data.path = data.path.join('.');
-		//console.log('update.' + data.path, data.value);
 		this.publish('update.' + data.path, data.value);
 	}
 
