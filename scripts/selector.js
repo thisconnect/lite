@@ -1,7 +1,7 @@
 new Unit({
 
 	initSetup: function(){
-		this.subscribe('descriptor.new', this.parse);
+		this.subscribe('descriptor add', this.parse);
 	},
 
 	readySetup: function(){
@@ -10,7 +10,7 @@ new Unit({
 		this.build();
 	},
 
-	parse: function(name, data){
+	parse: function(data){
 		new Element('option', {
 			value: data.name,
 			text: data.label
@@ -23,7 +23,7 @@ new Unit({
 	},
 
 	onCreate: function(){
-		this.publish('widget create', [this.element.value]);
+		this.publish('widget create', this.element.value);
 	}
 
 });

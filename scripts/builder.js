@@ -6,10 +6,10 @@ new Unit({
 
 	initSetup: function(){
 		this.subscribe({
-			'descriptor ready': this.readyDescriptor,
-			'descriptor.new': this.parse,
-			'planet.onPut': this.onPut,
-			'widget create': this.create
+			'descriptor add': this.parse,
+			'descriptor ready': this.readyDescriptors,
+			'widget create': this.create,
+			'planet put': this.onBuild
 		});
 	},
 
@@ -17,12 +17,12 @@ new Unit({
 		this.container = document.id('instruments');
 	},
 
-	parse: function(name, data){
-		this.widgets[data.name] = data;
+	readyDescriptors: function(){
+		this.onBuild(this.queue);
 	},
 
-	readyDescriptor: function(){
-		this.onPut(this.queue);
+	parse: function(data){
+		this.widgets[data.name] = data;
 	},
 
 	create: function(name){
@@ -32,23 +32,30 @@ new Unit({
 
 		point = point[name] = {};
 	//	TODO: should put default controller data on the planet
+
 	//	for (var i in controls){
 	//		if (controls.hasOwnProperty(i)){
 	//			point[controls[i].name] = controls[i].value;
 	//		}
 	//	}
+
+		// TODO: should be put a new widget
 		this.publish('put', [data]);
 	},
 
-	onPut: function(data){
+	count: function(){
+		return Object.keys(this.widgets).length;
+	},
+
+	onBuild: function(data){
 		for (var pos in data){
 			for (var name in data[pos]){
 				if (!this.widgets[name]) this.queue[pos] = data[pos];
 				else {
 					this.onCreate(pos, this.widgets[name]);
-					// TODO: remove this, should create widget with correct data
+					// TODO: this is a workaround to set current values of the controllers
 					for (var control in data[pos][name]){
-						this.publish('planet.update.' + [pos, name, control].join('.'), data[pos][name][control]);
+						this.publish('planet update ' + [pos, name, control].join(' '), data[pos][name][control]);
 					}
 				}
 			}
@@ -56,6 +63,7 @@ new Unit({
 	},
 
 	onCreate: function(pos, data){
+		// TODO: keep reference to instance
 		new Widget(pos, data).attach(this.container);
 		this.counter++;
 	}

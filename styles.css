@@ -1,8 +1,11 @@
 body {
-	font-family: Arial;
-	font-size: 12px;
+	font: 12px Arial;
 	margin: 0;
 	padding: 0;
+}
+
+label {
+	cursor: pointer;
 }
 
 #status {
@@ -16,36 +19,22 @@ body {
 	float: right;
 }
 
-#instruments {
-	padding: 10px;
-}
-
 .widget {
 	border: 1px solid #000;
-	display: inline-block;
-	margin: 5px;
-	padding: 10px;
-	width: 300px;
+	float: left;
+	margin: 20px 0 0 20px;
+	padding: 15px;
 }
 
 .widget h1 {
 	font-size: 14px;
-	margin: 0;
+	margin: 0 0 5px 0;
 }
 
 .controller {
-	padding: 5px;
-	position: relative;
-	margin: 5px;
+	margin: 0 0 10px 0;
 }
 
-.curtain {
-	background: #000;
-	position: absolute;
-	top: 0;
-	bottom: 0;
-	left: 0;
-	right: 0;
-	opacity: 0.5;
-	display: none;
+.controller:last-child {
+	margin-bottom: 0;
 }

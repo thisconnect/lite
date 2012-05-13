@@ -21,13 +21,13 @@
 		new Unit({
 			initSetup: function(){
 				this.subscribe({
-					'planet.connect': function(){
+					'planet connect': function(){
 						this.setStatus('Connected');
 					},
-					'planet.disconnect': function(){
+					'planet disconnect': function(){
 						this.setStatus('Disconnected');
 					},
-					'descriptor.new': function(name, data){
+					'descriptor add': function(name, data){
 						//console.log('descriptor.new', name, data);
 					},
 					'instrument.create': function(name, data){

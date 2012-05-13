@@ -2,8 +2,6 @@ var Widget = new Class({
 	
 	Implements: Unit,
 
-	Prefix: 'widget',
-
 	initialize: function(id, data){
 		this.setupUnit();
 		this.id = id;
@@ -16,9 +14,7 @@ var Widget = new Class({
 	},
 
 	build: function(){
-		var container = this.element = new Element('div.widget', {
-			'data-id': this.id
-		});
+		var container = this.element = new Element('section.widget');
 		new Element('h1', {text: this.label}).inject(container);
 		this.controlContainer = new Element('div.controllers').inject(container);
 		return this;
@@ -31,12 +27,14 @@ var Widget = new Class({
 			l = controllers.length;
 
 		while (l--) (function(controller){
-			var item = map[controller.name] = new Controller(controller.type, controller);
+			var item = map[controller.name] = new Controller(controller.type, controller)
+				id = [self.id, self.name, controller.name].join(' ');
+
 			item.addEvent('quickchange', function(value){
-				self.onControllerQuickChange(controller.name, value);
+				self.onControllerChange(controller.name, value);
 			}).attach(self.controlContainer);
 
-			self.subscribe('planet.update.' + [self.id, self.name, controller.name].join('.'), self.onStateUpdate.bind(item));
+			self.subscribe('planet update ' + id, self.onStateUpdate.bind(item));
 		})(controllers[l]);
 
 		this.controllers = map;
@@ -53,8 +51,11 @@ var Widget = new Class({
 		return this;
 	},
 
-	onControllerQuickChange: function(name, value){
-		this.publish('update', {'path': [this.id, this.name, name], 'value': value});
+	onControllerChange: function(name, value){
+		this.publish('widget update', {
+			'path': [this.id, this.name, name],
+			'value': value
+		});
 	},
 
 	onStateUpdate: function(value){

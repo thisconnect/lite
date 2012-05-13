@@ -24,8 +24,11 @@ new Unit({
 	parseManifest: function(data){
 		data = JSON.decode(data);
 		if (!data) return null;
-		var i = this.queue = data.length;
-		while (i--) this.load(data[i], this.parseDescriptor);
+		var i = this.count = data.length;
+		while (i--){
+			if (typeof data[i] == 'string') this.load(data[i], this.parseDescriptor);
+			else this.publish('descriptor add', data);
+		}
 		return this;
 	},
 
@@ -34,8 +37,8 @@ new Unit({
 		if (!data) return null;
 
 		data.name = data.name.toLowerCase();
-		this.publish('descriptor.new', [data.name, data]);
-		if (--this.queue == 0) this.publish('descriptor ready');
+		this.publish('descriptor add', data);
+		if (--this.count <= 0) this.publish('descriptor ready');
 		return this;
 	}
 

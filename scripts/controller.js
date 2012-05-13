@@ -10,14 +10,7 @@ var Controller = new Class({
 	},
 
 	build: function(){
-		var element = this.element = new Element('div.controller');
-		/*this.curtain = new Element('div.curtain', {
-			events: {
-				mousedown: function(e){
-					e.stopPropagation();
-				}
-			}
-		}).inject(element);*/
+		this.element = new Element('div.controller');
 		return this;
 	},
 

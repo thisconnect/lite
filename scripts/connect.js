@@ -1,13 +1,9 @@
 new Unit({
 
-	Prefix: 'planet',
-
 	initSetup: function(){
 		this.subscribe({
-			'update': this.update,
-			'widget.update': this.update,
-			'put': this.put,
-			'widget.put': this.put
+			'widget update': this.update,
+			'put': this.put
 		});
 	},
 
@@ -32,22 +28,22 @@ new Unit({
 
 	onConnect: function(){
 		this.connected = true;
-		this.publish('connect');
+		this.publish('planet connect');
 	},
 
 	onDisconnect: function(){
 		this.connected = false;
-		this.publish('disconnect');
+		this.publish('planet disconnect');
 	},
 
 	onPut: function(data){
-		this.publish('onPut', [data]);
+		this.publish('planet put', [data]);
 	},
 
 	onUpdate: function(data){
-		if (data.key != null) this.publish('update.' + data.key, data.value);
-		if (typeof data.path != 'string') data.path = data.path.join('.');
-		this.publish('update.' + data.path, data.value);
+		if (data.key != null) this.publish('planet update.' + data.key, data.value);
+		if (typeof data.path != 'string') data.path = data.path.join(' ');
+		this.publish('planet update ' + data.path, data.value);
 	}
 
 });
