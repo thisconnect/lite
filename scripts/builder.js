@@ -8,8 +8,8 @@ new Unit({
 		this.subscribe({
 			'descriptor add': this.parse,
 			'descriptor ready': this.readyDescriptors,
-			'widget create': this.create,
-			'planet put': this.onBuild
+			'widget select': this.create,
+			'widget create': this.onCreate
 		});
 	},
 
@@ -18,7 +18,7 @@ new Unit({
 	},
 
 	readyDescriptors: function(){
-		this.onBuild(this.queue);
+		this.onCreate(this.queue);
 	},
 
 	parse: function(data){
@@ -39,20 +39,16 @@ new Unit({
 	//		}
 	//	}
 
-		// TODO: should be put a new widget
+	//	TODO: should be put a new widget
 		this.publish('put', [data]);
 	},
 
-	count: function(){
-		return Object.keys(this.widgets).length;
-	},
-
-	onBuild: function(data){
+	onCreate: function(data){
 		for (var pos in data){
 			for (var name in data[pos]){
 				if (!this.widgets[name]) this.queue[pos] = data[pos];
 				else {
-					this.onCreate(pos, this.widgets[name]);
+					this.onBuild(pos, this.widgets[name]);
 					// TODO: this is a workaround to set current values of the controllers
 					for (var control in data[pos][name]){
 						this.publish('planet update ' + [pos, name, control].join(' '), data[pos][name][control]);
@@ -62,7 +58,7 @@ new Unit({
 		}
 	},
 
-	onCreate: function(pos, data){
+	onBuild: function(pos, data){
 		// TODO: keep reference to instance
 		new Widget(pos, data).attach(this.container);
 		this.counter++;

@@ -1,4 +1,34 @@
 [
 	"instrument-a.json",
-	"instrument-b.json"
+	"instrument-b.json",
+	{
+		"name": "instrument-c",
+		"label": "Instrument C",
+		"description": "Instrument for testing purposes only",
+		"controllers": [{
+			"name": "controller-a",
+			"label": "Controller A",
+			"type": "int",
+			"range": [1, 100]
+		}, {
+			"name": "controller-b",
+			"label": "Controller B",
+			"type": "boolean"
+		}, {
+			"name": "controller-c",
+			"label": "Controller C",
+			"type": "boolean"
+		}, {
+			"name": "controller-d",
+			"label": "Controller D",
+			"type": "boolean"
+		}],
+		"data": {
+			"controller-a": 20,
+			"controller-b": false,
+			"controller-c": true,
+			"controller-d": true
+		}
+	}
+
 ]

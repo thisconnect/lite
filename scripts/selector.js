@@ -18,12 +18,12 @@ new Unit({
 	},
 
 	build: function(){
-		this.dispatcher.addEvent('click', this.onCreate.bind(this));
+		this.dispatcher.addEvent('click', this.onSelect.bind(this));
 		return this;
 	},
 
-	onCreate: function(){
-		this.publish('widget create', this.element.value);
+	onSelect: function(){
+		this.publish('widget select', this.element.value);
 	}
 
 });
