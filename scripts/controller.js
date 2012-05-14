@@ -29,7 +29,7 @@ var Controller = new Class({
 	},
 
 	attach: function(container, position){
-		this.element.inject(container || document.body, position || 'top');
+		this.element.inject(container || document.body, position || 'bottom');
 		return this;
 	},
 

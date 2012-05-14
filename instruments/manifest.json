@@ -29,6 +29,51 @@
 			"controller-c": true,
 			"controller-d": true
 		}
+	},
+	{
+		"name": "instrument-d",
+		"label": "Instrument D",
+		"description": "Instrument for testing purposes only",
+		"controllers": {
+			"controller-a": {
+				"name": "controller-a",
+				"label": "Controller A",
+				"type": "int",
+				"range": [1, 100]
+			},
+			"controller-b": {
+				"name": "controller-b",
+				"label": "Controller B",
+				"type": "boolean"
+			},
+			"controller-c": {
+				"name": "controller-c",
+				"label": "Controller C",
+				"type": "boolean"
+			}
+		},
+		"data": {
+			"controller-a": 20,
+			"controller-b": false,
+			"controller-c": true
+		}
 	}
 
 ]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
