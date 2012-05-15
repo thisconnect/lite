@@ -1,16 +1,16 @@
 {
-	"name": "instrument-B",
-	"label": "Instrument B",
+	"name": "instrument-b1",
+	"label": "Instrument B1",
 	"controllers": [{
-		"name": "controller-a",
 		"label": "Controller A",
 		"type": "int",
-		"range": [1, 100],
-		"value": 20
+		"range": [1, 100]
 	}, {
-		"name": "controller-b",
 		"label": "Controller B",
-		"type": "boolean",
-		"value": false
-	}]
+		"type": "boolean"
+	}],
+	"payload": {
+		0: 1,
+		1: true
+	}
 }

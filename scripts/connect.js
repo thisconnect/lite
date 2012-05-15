@@ -37,7 +37,7 @@ new Unit({
 	},
 
 	onPut: function(data){
-		this.publish('widget create', [data]);
+		this.publish('widget create', data);
 	},
 
 	onUpdate: function(data){

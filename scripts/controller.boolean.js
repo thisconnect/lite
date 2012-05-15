@@ -4,7 +4,7 @@ Controller.Boolean = new Class({
 
 	initialize: function(data){
 		this.label = data.label;
-		this.value = data.value;
+		//this.value = data.value;
 		this.build();
 	},
 
