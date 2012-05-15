@@ -2,6 +2,7 @@ new Unit({
 
 	widgets: {},
 	counter: 0,
+	ready: false,
 	queue: {},
 
 	initSetup: function(){
@@ -18,7 +19,9 @@ new Unit({
 	},
 
 	readyDescriptors: function(){
+		this.ready = true;
 		this.onCreate(this.queue);
+		this.queue = {};
 	},
 
 	parse: function(data){
@@ -39,28 +42,27 @@ new Unit({
 	//		}
 	//	}
 
-	//	TODO: should be put a new widget
+	//	TODO: should be "put a new widget on the planet"
 		this.publish('put', [data]);
 	},
 
 	onCreate: function(data){
 		for (var pos in data){
-			for (var name in data[pos]){
-				if (!this.widgets[name]) this.queue[pos] = data[pos];
-				else {
-					this.onBuild(pos, this.widgets[name]);
-					// TODO: this is a workaround to set current values of the controllers
-					for (var control in data[pos][name]){
-						this.publish('planet update ' + [pos, name, control].join(' '), data[pos][name][control]);
-					}
+			if (!this.ready) this.queue[pos] = data[pos];
+			else for (var name in data[pos]){
+				this.onBuild(pos, this.widgets[name]);
+				// TODO: this is a workaround to set current values of the controllers
+				for (var control in data[pos][name]){
+					this.publish('planet update ' + [pos, name, control].join(' '), data[pos][name][control]);
 				}
 			}
 		}
 	},
 
 	onBuild: function(pos, data){
-		// TODO: keep reference to instance
+		// TODO: could/should? keep reference to instance
 		new Widget(pos, data).attach(this.container);
+		// TODO: remove counting up
 		this.counter++;
 	}
 
