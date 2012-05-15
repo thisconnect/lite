@@ -12,9 +12,10 @@ var Widget = new Class({
 	},
 
 	build: function(label){
-		this.element = new Element('section.widget').grab(new Element('h1', {
-			text: label
-		}));
+		this.element = new Element('section.widget').adopt([
+			new Element('h1', {text: label}),
+			new Element('span.close[html=&#10006;]') // &#10005;
+		]);
 		return this;
 	},
 

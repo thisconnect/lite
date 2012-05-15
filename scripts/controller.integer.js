@@ -32,7 +32,7 @@ Controller.Int = new Class({
 		}
 
 		this.parent();
-		this.element.adopt(label, control);
+		this.element.adopt(control, label);
 	},
 
 	onChange: function(value){

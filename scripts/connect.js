@@ -41,7 +41,7 @@ new Unit({
 	},
 
 	onUpdate: function(data){
-		if (data.key != null) this.publish('planet update.' + data.key, data.value);
+		if (data.key != null) this.publish('planet update ' + data.key, data.value);
 		if (typeof data.path != 'string') data.path = data.path.join(' ');
 		this.publish('planet update ' + data.path, data.value);
 	}

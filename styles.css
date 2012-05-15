@@ -24,11 +24,18 @@ label {
 	display: inline-block;
 	margin: 20px 0 0 20px;
 	padding: 15px;
+	position: relative;
 }
 
 .widget h1 {
 	font-size: 14px;
 	margin: 0 0 5px 0;
+}
+
+.widget .close {
+	position: absolute;
+	right: 12px;
+	top: 12px;
 }
 
 .controller {

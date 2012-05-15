@@ -1,6 +1,7 @@
 new Unit({
 
 	descriptorDir: 'instruments',
+	count: 0,
 
 	initSetup: function(){
 		this.setDir(this.descriptorDir);
