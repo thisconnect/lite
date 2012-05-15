@@ -4,7 +4,19 @@
 	<meta charset="utf-8">
 	<title>Satellite</title>
 	<link rel=stylesheet href="styles.css">
-	
+</head>
+<body>
+	<header id=status>
+		<div id=instrument-new>
+			<label>Create new:
+				<select id=instrument-list></select>
+			</label>
+			<button id=instrument-create>Go</button>
+		</div>
+		Planet <span id=conn-status></span>
+	</header>
+	<div id=instruments></div>
+
 	<script src="http://localhost:8999/socket.io/socket.io.js"></script>
 	<script src="support/mootools-core-1.4.5-yc.js"></script>
 	<script src="support/company/Source/Company.js"></script>
@@ -49,17 +61,6 @@
 			}
 		});
 	</script>
-</head>
-<body>
-	<header id=status>
-		<div id=instrument-new>
-			<label>Create new:
-				<select id=instrument-list></select>
-			</label>
-			<button id=instrument-create>Go</button>
-		</div>
-		Planet <span id=conn-status></span>
-	</header>
-	<div id=instruments></div>
+
 </body>
 </html>
