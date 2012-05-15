@@ -29,17 +29,17 @@ var Widget = new Class({
 		return this;
 	},
 
-	addController: function(id, controller){
+	addController: function(path, controller){
 		var self = this,
 			control = new Controller(controller.type, controller);
 
 		control.addEvent('quickchange', function(value){
 			self.publish('widget update', {
-				'path': id,
+				'path': path,
 				'value': value
 			});
 		});
-		this.subscribe('planet update ' + id.join(' '), this.onStateUpdate.bind(control));
+		this.subscribe('planet update ' + path.join(' '), this.onStateUpdate.bind(control));
 		return control;
 	},
 
