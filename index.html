@@ -29,14 +29,14 @@
 						this.setStatus('&#9740;');
 						//this.setStatus('Disconnected');
 					},
-					'descriptor add': function(name, data){
-						//console.log('descriptor.new', name, data);
+					'descriptor add': function(data){
+						console.log('descriptor add', data);
 					},
-					'widget create': function(name, data){
-						//console.log('instrument.create', name, data);
+					'widget create': function(data){
+						console.log('widget create', data);
 					},
-					'widget update': function(id, value){
-						//console.log('widget.quickchange', id, value);
+					'widget update': function(data){
+						console.log('widget update', data.path || data.key, data.value);
 					}
 				});
 			},
