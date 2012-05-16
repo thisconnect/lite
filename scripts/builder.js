@@ -1,9 +1,8 @@
 new Unit({
 
 	widgets: {},
-	counter: 0,
-	ready: false,
 	queue: {},
+	counter: 0,
 
 	initSetup: function(){
 		this.subscribe({
@@ -15,6 +14,7 @@ new Unit({
 	},
 
 	readySetup: function(){
+		var self = this;
 		this.container = document.id('instruments');
 	},
 

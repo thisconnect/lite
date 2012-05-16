@@ -9,7 +9,7 @@
 		},
 		"controller-b": {
 			"label": "Controller B",
-			"type": "boolean"
+			"type": "bool"
 		}
 	},
 	"payload": {

@@ -4,7 +4,7 @@
 	{
 		"name": "instrument-e",
 		"label": "Instrument E",
-		"description": "Instrument for testing purposes only",
+		"description": "Instrument with named controllers",
 		"controllers": {
 			"controller-a": {
 				"label": "Controller A",
@@ -13,11 +13,11 @@
 			},
 			"controller-b": {
 				"label": "Controller B",
-				"type": "boolean"
+				"type": "bool"
 			},
 			"controller-c": {
 				"label": "Controller C",
-				"type": "boolean"
+				"type": "bool"
 			}
 		},
 		"payload": {
@@ -29,25 +29,27 @@
 	{
 		"name": "instrument-f",
 		"label": "Instrument F",
-		"description": "Instrument for testing purposes only",
+		"description": "Instrument with anonymous controllers",
 		"controllers": [{
 			"label": "Controller A",
 			"type": "int",
 			"range": [1, 100]
 		}, {
 			"label": "Controller B",
-			"type": "boolean"
+			"type": "int",
+			"range": [1, 100]
 		}, {
 			"label": "Controller C",
-			"type": "boolean"
+			"type": "int",
+			"range": [1, 100]
 		}, {
 			"label": "Controller D",
-			"type": "boolean"
+			"type": "bool"
 		}],
 		"payload": {
-			0: 11,
-			1: false,
-			2: true,
+			0: 30,
+			1: 20,
+			2: 10,
 			3: true
 		}
 	}

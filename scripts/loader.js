@@ -1,7 +1,6 @@
 new Unit({
 
 	descriptorDir: 'instruments',
-	count: 0,
 
 	initSetup: function(){
 		this.setDir(this.descriptorDir);
@@ -26,7 +25,7 @@ new Unit({
 		data = JSON.decode(data);
 		if (!data) return null;
 
-		var i = this.count = Object.getLength(data);
+		var i = this.count = data.length;
 		while (i--){
 			if (typeof data[i] != 'string') this.parseDescriptor(data[i]);
 			else this.load(data[i], this.parseDescriptor);

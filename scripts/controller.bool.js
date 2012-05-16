@@ -1,4 +1,4 @@
-Controller.Boolean = new Class({
+Controller.Bool = new Class({
 
 	Extends: Controller,
 
