@@ -14,9 +14,9 @@ var Widget = new Class({
 	build: function(label){
 		this.element = new Element('section.widget').adopt([
 			new Element('h1', {text: label}),
-			new Element('span.close[html=&#10006;]', { // &#10005;
+			new Element('span.remove[html=&#10006;]', { // &#10005;
 				events: {
-					click: this.onDelete.bind(this)
+					click: this.onRemove.bind(this)
 				}
 			})
 		]);
@@ -57,8 +57,13 @@ var Widget = new Class({
 		return this;
 	},
 
-	onDelete: function(){
-		console.log('remove this widget', this.id);
+	onRemove: function(){
+		this.publish('widget remove', this.id);
+	},
+
+	destroy: function(){
+		this.element.destroy();
+		return this;
 	},
 
 	onStateUpdate: function(value){

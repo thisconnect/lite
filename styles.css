@@ -32,7 +32,8 @@ label {
 	margin: 0 0 5px 0;
 }
 
-.widget .close {
+.widget .remove {
+	cursor: pointer;
 	position: absolute;
 	right: 12px;
 	top: 12px;

@@ -49,6 +49,9 @@
 					},
 					'widget update': function(data){
 						console.log('widget update', data.path || data.key, data.value);
+					},
+					'widget delete': function(id){
+						console.log('widget delete', id);
 					}
 				});
 			},

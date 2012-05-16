@@ -3,6 +3,7 @@ new Unit({
 	initSetup: function(){
 		this.subscribe({
 			'widget update': this.update,
+			'widget remove': this.remove,
 			'put': this.put
 		});
 	},
@@ -12,6 +13,7 @@ new Unit({
 		socket.on('connect', this.onConnect.bind(this));
 		socket.on('initial state', this.onPut.bind(this));
 		socket.on('put', this.onPut.bind(this));
+		socket.on('delete', this.onRemove.bind(this));
 		socket.on('state update', this.onUpdate.bind(this));
 		socket.on('disconnect', this.onDisconnect.bind(this));
 	},
@@ -23,6 +25,16 @@ new Unit({
 
 	update: function(data){
 		this.socket.emit('update', data);
+		return this;
+	},
+
+	remove: function(id){
+		this.socket.emit('delete', id);
+		return this;
+	},
+
+	onRemove: function(id){
+		this.publish('planet remove', id);
 		return this;
 	},
 
