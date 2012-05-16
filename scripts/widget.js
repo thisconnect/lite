@@ -14,7 +14,11 @@ var Widget = new Class({
 	build: function(label){
 		this.element = new Element('section.widget').adopt([
 			new Element('h1', {text: label}),
-			new Element('span.close[html=&#10006;]') // &#10005;
+			new Element('span.close[html=&#10006;]', { // &#10005;
+				events: {
+					click: this.onDelete.bind(this)
+				}
+			})
 		]);
 		return this;
 	},
@@ -51,6 +55,10 @@ var Widget = new Class({
 	detach: function(){
 		this.element.dispose();
 		return this;
+	},
+
+	onDelete: function(){
+		console.log('remove this widget', this.id);
 	},
 
 	onStateUpdate: function(value){
