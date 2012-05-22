@@ -16,6 +16,7 @@ new Unit({
 		new Request({
 			url: this.url + file,
 			method: 'get',
+			noCache: true,
 			onSuccess: callback.bind(this)
 		}).send();
 		return this;
