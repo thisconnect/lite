@@ -32,7 +32,8 @@ Controller.Int = new Class({
 		}
 
 		this.parent();
-		this.element.adopt(control, label);
+		this.element.adopt(label);
+		control.inject(label, 'top');
 	},
 
 	onChange: function(value){

@@ -9,7 +9,7 @@ new Unit({
 	},
 
 	readySetup: function(){
-		var socket = this.socket = io.connect('http://localhost:8999');
+		var socket = this.socket = io.connect();
 		socket.on('connect', this.onConnect.bind(this));
 		socket.on('initial state', this.onPut.bind(this));
 		socket.on('put', this.onPut.bind(this));

@@ -1,3 +1,6 @@
+::selection { background: transparent; }
+::-moz-selection { background: transparent; }
+
 body {
     background: #fff;
 	font: 12px Arial;
@@ -24,7 +27,7 @@ label {
 	border: 1px solid #000;
 	display: inline-block;
 	margin: 20px 0 0 20px;
-	padding: 15px;
+	padding: 15px 15px 5px 15px;
 	position: relative;
 }
 
@@ -40,10 +43,15 @@ label {
 	top: 12px;
 }
 
-.controller {
-	margin: 0 0 10px 0;
+label {
+	line-height: 20px;
+	vertical-align: bottom;
 }
 
-.controller:last-child {
-	margin-bottom: 0;
+input {
+	margin: 0 5px 0 0;
+}
+
+input[type=checkbox] {
+	vertical-align: 4px;
 }

@@ -7,7 +7,7 @@ new Unit({
 
 	initSetup: function(){
 		this.subscribe({
-			'descriptor add': this.parse,
+			'descriptor add': this.addDescriptor,
 			'descriptor ready': this.readyDescriptors,
 			'widget select': this.create,
 			'widget create': this.onCreate,
@@ -25,14 +25,15 @@ new Unit({
 		this.queue = {};
 	},
 
-	parse: function(data){
+	addDescriptor: function(data){
 		this.widgets[data.name] = data;
 	},
 
 	create: function(name){
 		var data = {},
 			dest = data[this.counter] = {};
-		dest = dest[name] = this.widgets[name].payload;
+
+		dest[name] = this.widgets[name].payload;
 		this.publish('put', data);
 	},
 
@@ -42,7 +43,8 @@ new Unit({
 			if (!this.ready) this.queue[pos] = data[pos];
 			else for (var widget in data[pos]){
 				if (this.state[pos]) console.log('shit');
-				this.state[pos] = new Widget(pos, this.widgets[widget]).attach(this.container);
+				this.state[pos] = new Widget(pos, this.widgets[widget]);
+				this.state[pos].attach(this.container);
 				for (var control in data[pos][widget]){
 					this.publish('planet update ' + [pos, widget, control].join(' '), data[pos][widget][control]);
 				}
