@@ -1,20 +1,12 @@
 new Unit({
 
-	descriptorDir: 'instruments',
-
 	initSetup: function(){
-		this.setDir(this.descriptorDir);
 		this.load('manifest.json', this.parseManifest);
-	},
-
-	setDir: function(descriptors){
-		this.url = '/' + descriptors + '/';
-		return this;
 	},
 
 	load: function(file, callback){
 		new Request({
-			url: this.url + file,
+			url: '/instruments/' + file,
 			method: 'get',
 			noCache: true,
 			onSuccess: callback.bind(this)

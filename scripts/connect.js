@@ -4,18 +4,9 @@ new Unit({
 		this.subscribe({
 			'widget update': this.post,
 			'widget remove': this.remove,
-			'put': this.put
+			'put': this.put,
+			'planet connection': this.connect
 		});
-	},
-
-	readySetup: function(){
-		var socket = this.socket = io.connect();
-		socket.on('connect', this.onConnect.bind(this));
-		socket.on('initial state', this.onPut.bind(this));
-		socket.on('put', this.onPut.bind(this));
-		socket.on('delete', this.onRemove.bind(this));
-		socket.on('post', this.onPost.bind(this));
-		socket.on('disconnect', this.onDisconnect.bind(this));
 	},
 
 	put: function(data){
@@ -38,13 +29,21 @@ new Unit({
 		return this;
 	},
 
+	connect: function(socket){
+		this.socket = socket;
+		socket.on('connect', this.onConnect.bind(this));
+		socket.on('initial state', this.onPut.bind(this));
+		socket.on('put', this.onPut.bind(this));
+		socket.on('delete', this.onRemove.bind(this));
+		socket.on('post', this.onPost.bind(this));
+		socket.on('disconnect', this.onDisconnect.bind(this));
+	},
+
 	onConnect: function(){
-		this.connected = true;
 		this.publish('planet connect');
 	},
 
 	onDisconnect: function(){
-		this.connected = false;
 		this.publish('planet disconnect');
 	},
 

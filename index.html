@@ -1,12 +1,10 @@
 <!DOCTYPE HTML>
-
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width">
-
-<title>this.connect</title>
+<title>this.connect();</title>
 <link rel=stylesheet href="styles.css">
 
-<header id=status>
+<header>
 	<div id=instrument-new>
 		<label>
 			Create new:
@@ -19,8 +17,8 @@
 
 <div id=instruments></div>
 
-<!--script src="//localhost:8999/socket.io/socket.io.js"></script-->
-<script src="socket.io/socket.io.js"></script>
+<script src="//localhost:8999/socket.io/socket.io.js"></script>
+<!-- <script src="socket.io/socket.io.js"></script> -->
 
 <script src="support/mootools-core-1.4.5-yc.js"></script>
 <script src="support/company/Source/Company.js"></script>
@@ -33,44 +31,5 @@
 <script src="scripts/selector.js"></script>
 <script src="scripts/loader.js"></script>
 <script src="scripts/connect.js"></script>
-<script>
-
-	new Unit({
-
-		initSetup: function(){
-			this.subscribe({
-				'planet connect': function(){
-					this.setStatus('&#9741');
-					//this.setStatus('Connected');
-				},
-				'planet disconnect': function(){
-					this.setStatus('&#9740;');
-					//this.setStatus('Disconnected');
-				},
-				'descriptor add': function(data){
-					//console.log('descriptor add', data);
-				},
-				'widget create': function(data){
-					//console.log('widget create', data);
-				},
-				'widget update': function(data){
-					//console.log('widget update', data.path || data.key, data.value);
-				},
-				'widget delete': function(id){
-					//console.log('widget delete', id);
-				}
-			});
-		},
-
-		readySetup: function(){
-			this.status = document.id('conn-status');
-		},
-
-		setStatus: function(status){
-			this.status.set('html', status);
-			return this;
-		}
-	});
-
-</script>
-</html>
+<script src="scripts/status.js"></script>
+<script src="scripts/planet.js"></script>
