@@ -44,7 +44,9 @@ new Unit({
 	},
 
 	onPut: function(data){
-		this.publish('widget create', data);
+		for (var pos in data){
+			this.publish('widget create', [parseFloat(pos), data[pos]]);
+		}
 	},
 
 	onPost: function(data){

@@ -23,7 +23,9 @@ new Unit({
 
 	readyDescriptors: function(){
 		this.ready = true;
-		this.onCreate(this.queue);
+		for (var pos in this.queue){
+			this.publish('widget create', [pos, this.queue[pos]]);
+		}
 		this.queue = {};
 	},
 
@@ -39,18 +41,15 @@ new Unit({
 		this.publish('put', data);
 	},
 
-	onCreate: function(data){
-		for (var pos in data){
-			pos = parseFloat(pos);
-			if (!this.ready) this.queue[pos] = data[pos];
-			else for (var widget in data[pos]){
-				this.state[pos] = new Widget(pos, this.widgets[widget]);
-				this.state[pos].attach(this.container);
-				for (var control in data[pos][widget]){
-					this.publish('planet update ' + [pos, widget, control].join(' '), data[pos][widget][control]);
-				}
-				if (this.counter <= pos) this.counter = pos + 1;
+	onCreate: function(pos, data){
+		if (!this.ready) this.queue[pos] = data;
+		else for (var widget in data){
+			this.state[pos] = new Widget(pos, this.widgets[widget]);
+			this.state[pos].attach(this.container);
+			for (var control in data[widget]){
+				this.publish('planet update ' + [pos, widget, control].join(' '), data[widget][control]);
 			}
+			if (this.counter <= pos) this.counter = pos + 1;
 		}
 	},
 
