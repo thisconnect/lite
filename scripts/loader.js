@@ -11,7 +11,6 @@ new Unit({
 			noCache: true,
 			onSuccess: callback.bind(this)
 		}).send();
-		return this;
 	},
 
 	parseManifest: function(data){
@@ -23,7 +22,6 @@ new Unit({
 			if (typeof data[i] != 'string') this.parseDescriptor(data[i]);
 			else this.load(data[i], this.parseDescriptor);
 		}
-		return this;
 	},
 
 	parseDescriptor: function(data){
@@ -32,7 +30,6 @@ new Unit({
 		data.name = data.name.toLowerCase();
 		this.publish('descriptor add', data);
 		if (--this.count <= 0) this.publish('descriptor ready');
-		return this;
 	}
 
 });

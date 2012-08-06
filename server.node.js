@@ -3,7 +3,7 @@ var http = require('http'),
 	planet = require('planet').Planet;
 
 var app = connect()
-	//.use('/instruments', connect.static(__dirname + '/../tcmelib'))
+	//.use('/instruments', connect.static(__dirname + '/../abslib'))
 	.use(connect.static(__dirname))
 	.use(connect.favicon('./favicon.ico'));
 

@@ -17,14 +17,12 @@ new Unit({
 			value: data.name,
 			text: data.label
 		}).inject(this.element || this.queue, 'top');
-		if (!this.element) console.log('aha!?');
 	},
 
 	build: function(){
 		this.element.adopt(this.queue.getElements('option'));
 		this.queue.destroy();
 		this.dispatcher.addEvent('click', this.onSelect.bind(this));
-		return this;
 	},
 
 	onSelect: function(){

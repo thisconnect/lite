@@ -11,22 +11,18 @@ new Unit({
 
 	put: function(data){
 		this.socket.emit('put', data);
-		return this;
 	},
 
 	post: function(data){
 		this.socket.emit('post', data);
-		return this;
 	},
 
 	remove: function(id){
 		this.socket.emit('delete', id);
-		return this;
 	},
 
 	onRemove: function(id){
 		this.publish('planet remove', id);
-		return this;
 	},
 
 	connect: function(socket){

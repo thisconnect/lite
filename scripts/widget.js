@@ -20,7 +20,6 @@ var Widget = new Class({
 				}
 			})
 		]);
-		return this;
 	},
 
 	buildControllers: function(controllers){
@@ -30,7 +29,6 @@ var Widget = new Class({
 				this.addController([this.id, this.name, name], controllers[name]).attach(container);
 			}
 		};
-		return this;
 	},
 
 	addController: function(path, controller){
@@ -63,7 +61,6 @@ var Widget = new Class({
 
 	destroy: function(){
 		this.element.destroy();
-		return this;
 	},
 
 	onStateUpdate: function(value){

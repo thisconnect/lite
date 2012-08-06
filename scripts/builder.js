@@ -16,7 +16,9 @@ new Unit({
 	},
 
 	readySetup: function(){
-		this.container = document.id('instruments');
+		this.header = new Element('header');
+		this.container = new Element('div');
+		document.body.adopt([this.header, this.container]);
 	},
 
 	readyDescriptors: function(){
@@ -42,7 +44,6 @@ new Unit({
 			pos = parseFloat(pos);
 			if (!this.ready) this.queue[pos] = data[pos];
 			else for (var widget in data[pos]){
-				if (this.state[pos]) console.log('shit');
 				this.state[pos] = new Widget(pos, this.widgets[widget]);
 				this.state[pos].attach(this.container);
 				for (var control in data[pos][widget]){

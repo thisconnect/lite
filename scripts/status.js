@@ -3,12 +3,10 @@ new Unit({
 	initSetup: function(){
 		this.subscribe({
 			'planet connect': function(){
-				this.setStatus('&#9741');
-				//this.setStatus('Connected');
+				this.setStatus('&#9741'); // Connected
 			},
 			'planet disconnect': function(){
-				this.setStatus('&#9740;');
-				//this.setStatus('Disconnected');
+				this.setStatus('&#9740;'); // Disconnected
 			},
 			'descriptor add': function(data){
 				//console.log('descriptor add', data);
