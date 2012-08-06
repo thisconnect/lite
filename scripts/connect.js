@@ -1,9 +1,13 @@
 new Unit({
 
+	queue: {},
+	ready: false,
+
 	initSetup: function(){
 		this.subscribe({
 			'widget update': this.post,
 			'widget remove': this.remove,
+			'descriptor ready': this.readyDescriptors,
 			'put': this.put,
 			'planet connection': this.connect
 		});
@@ -43,8 +47,15 @@ new Unit({
 		this.publish('planet disconnect');
 	},
 
+	readyDescriptors: function(){
+		this.ready = true;
+		this.onPut(this.queue);
+		this.queue = {};
+	},
+
 	onPut: function(data){
-		for (var pos in data){
+		if (!this.ready) this.queue = data;
+		else for (var pos in data){
 			this.publish('widget create', [parseFloat(pos), data[pos]]);
 		}
 	},
