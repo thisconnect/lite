@@ -1,9 +1,5 @@
 new Unit({
 
-	widgets: {},
-	state: {},
-	counter: 0,
-
 	initSetup: function(){
 		this.subscribe({
 			'descriptor add': this.addDescriptor,
@@ -13,15 +9,22 @@ new Unit({
 		});
 	},
 
+	header: null,
+	container: null,
+
 	readySetup: function(){
 		this.header = new Element('header');
 		this.container = new Element('div');
 		document.body.adopt([this.header, this.container]);
 	},
 
+	widgets: {},
+
 	addDescriptor: function(data){
 		this.widgets[data.name] = data;
 	},
+
+	counter: 0,
 
 	create: function(name){
 		var data = {},
@@ -30,6 +33,8 @@ new Unit({
 		dest[name] = this.widgets[name].payload;
 		this.publish('put', data);
 	},
+
+	state: {},
 
 	onCreate: function(pos, data){
 		for (var widget in data){

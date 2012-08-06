@@ -4,6 +4,9 @@ new Unit({
 		this.subscribe('descriptor add', this.parse);
 	},
 
+	element: null,
+	dispatcher: null,
+
 	readySetup: function(){
 		this.element = document.id('instrument-list');
 		this.dispatcher = document.id('instrument-create');

@@ -1,8 +1,5 @@
 new Unit({
 
-	queue: {},
-	ready: false,
-
 	initSetup: function(){
 		this.subscribe({
 			'widget update': this.post,
@@ -12,6 +9,8 @@ new Unit({
 			'planet connection': this.connect
 		});
 	},
+
+	socket: null,
 
 	put: function(data){
 		this.socket.emit('put', data);
@@ -46,6 +45,9 @@ new Unit({
 	onDisconnect: function(){
 		this.publish('planet disconnect');
 	},
+
+	ready: false,
+	queue: {},
 
 	readyDescriptors: function(){
 		this.ready = true;

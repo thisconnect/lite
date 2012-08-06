@@ -13,6 +13,8 @@ new Unit({
 		}).send();
 	},
 
+	count: 0,
+
 	parseManifest: function(data){
 		data = JSON.decode(data);
 		if (!data) return null;
