@@ -4,28 +4,20 @@ new Unit({
 		this.subscribe('descriptor add', this.parse);
 	},
 
-	element: null,
-	dispatcher: null,
+	element: new Element('select'),
+
+	dispatcher: new Element('button[text=add]'),
 
 	readySetup: function(){
-		this.element = document.id('instrument-list');
-		this.dispatcher = document.id('instrument-create');
-		this.build();
+		this.publish('interface add', ['header', [this.element, this.dispatcher	]]);
+		this.dispatcher.addEvent('click', this.onSelect.bind(this));
 	},
-
-	queue: new Element('select'),
 
 	parse: function(data){
 		new Element('option', {
 			value: data.name,
 			text: data.label
-		}).inject(this.element || this.queue, 'top');
-	},
-
-	build: function(){
-		this.element.adopt(this.queue.getElements('option'));
-		this.queue.destroy();
-		this.dispatcher.addEvent('click', this.onSelect.bind(this));
+		}).inject(this.element, 'top');
 	},
 
 	onSelect: function(){

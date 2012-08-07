@@ -19,10 +19,6 @@ header {
 	padding: 0 10px;
 }
 
-#instrument-new {
-	float: right;
-}
-
 .widget {
 	border: 1px solid #000;
 	display: inline-block;

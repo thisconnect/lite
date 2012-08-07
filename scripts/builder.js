@@ -5,17 +5,20 @@ new Unit({
 			'descriptor add': this.addDescriptor,
 			'widget select': this.create,
 			'widget create': this.onCreate,
-			'planet remove': this.onRemove
+			'planet remove': this.onRemove,
+			'interface add': this.addInterface
 		});
 	},
 
-	header: null,
-	container: null,
+	header: new Element('header'),
+	content: new Element('div'),
 
 	readySetup: function(){
-		this.header = new Element('header');
-		this.container = new Element('div');
-		document.body.adopt([this.header, this.container]);
+		document.body.adopt([this.header, this.content]);
+	},
+
+	addInterface: function(where, nodes){
+		this[where].adopt(nodes);
 	},
 
 	widgets: {},
@@ -39,7 +42,7 @@ new Unit({
 	onCreate: function(pos, data){
 		for (var widget in data){
 			this.state[pos] = new Widget(pos, this.widgets[widget]);
-			this.state[pos].attach(this.container);
+			this.state[pos].attach(this.content);
 			for (var control in data[widget]){
 				this.publish('planet update ' + [pos, widget, control].join(' '), data[widget][control]);
 			}
