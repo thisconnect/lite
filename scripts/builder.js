@@ -6,7 +6,7 @@ new Unit({
 			'widget select': this.create,
 			'widget create': this.onCreate,
 			'planet remove': this.onRemove,
-			'interface add': this.addInterface
+			'tools add': this.addTool
 		});
 	},
 
@@ -17,8 +17,8 @@ new Unit({
 		document.body.adopt([this.header, this.content]);
 	},
 
-	addInterface: function(where, nodes){
-		this[where].adopt(nodes);
+	addTool: function(nodes){
+		this.header.adopt(nodes);
 	},
 
 	widgets: {},

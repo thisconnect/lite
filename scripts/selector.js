@@ -6,10 +6,10 @@ new Unit({
 
 	element: new Element('select'),
 
-	dispatcher: new Element('button[text=add]'),
+	dispatcher: new Element('button.btn.btn-mini[text=add]'),
 
 	readySetup: function(){
-		this.publish('interface add', ['header', [this.element, this.dispatcher	]]);
+		this.publish('tools add', [this.element, this.dispatcher]);
 		this.dispatcher.addEvent('click', this.onSelect.bind(this));
 	},
 

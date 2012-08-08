@@ -1,8 +1,10 @@
 <!DOCTYPE HTML>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>this.connect();</title>
+<title>this.connect( )</title>
 <link rel=stylesheet href="styles.css">
+
+
 
 <!-- <script src="//localhost:8999/socket.io/socket.io.js"></script> -->
 <script src="socket.io/socket.io.js"></script>
@@ -31,6 +33,8 @@ new Unit({
 			'widget create': this.log.bind('widget create'),
 			'widget update': this.log.bind('widget update'),
 			'widget remove': this.log.bind('widget remove'),
+
+			'tools add': this.log.bind('tools add'),
 			
 			'planet connection': this.log.bind('planet connection'),
 			'planet connect': this.log.bind('planet connect'),
