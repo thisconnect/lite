@@ -6,10 +6,11 @@ new Unit({
 
 	element: new Element('select'),
 
-	dispatcher: new Element('button.btn.btn-mini[text=add]'),
+	dispatcher: new Element('button.btn[text=add]'),
 
 	readySetup: function(){
-		this.publish('tools add', [this.element, this.dispatcher]);
+		this.publish('tools add', [this.element]);
+		this.publish('tools add', [this.dispatcher]);
 		this.dispatcher.addEvent('click', this.onSelect.bind(this));
 	},
 
@@ -20,7 +21,8 @@ new Unit({
 		}).inject(this.element, 'top');
 	},
 
-	onSelect: function(){
+	onSelect: function(e){
+		e.preventDefault();
 		this.publish('widget select', this.element.value);
 	}
 

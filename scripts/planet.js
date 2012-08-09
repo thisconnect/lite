@@ -1,17 +1,18 @@
 new Unit({
 
-	element: new Element('button.btn.btn-mini[text="☉ local"]'),
+	element: new Element('button.btn[text="☉ local"]'),
 
 	readySetup: function(){
 		this.publish('tools add', this.element);
-		this.element.addEvent('click', this.toggle.bind(this));
+		this.element.addEvent('click', this.onToggle.bind(this));
 		this.connect();
 		io.connect('/services').on('setup', function(){
 			console.log('services', arguments);
 		});
 	},
 
-	toggle: function(){
+	onToggle: function(e){
+		e.preventDefault();
 		if (this.connected) this.disconnect();
 		else this.socket.socket.reconnect();
 	},
