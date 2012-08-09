@@ -11,14 +11,14 @@ new Unit({
 	},
 
 	header: new Element('header'),
-	content: new Element('div'),
+	content: new Element('section'),
 
 	readySetup: function(){
 		document.body.adopt([this.header, this.content]);
 	},
 
-	addTool: function(nodes){
-		this.header.adopt(nodes);
+	addTool: function(){
+		this.header.adopt(arguments);
 	},
 
 	widgets: {},
