@@ -1,6 +1,6 @@
 new Unit({
 
-	element: new Element('button.btn[text="☉ local"]'),
+	element: new Element('button.btn.pull-right[text="☉"][title=local]'),
 
 	readySetup: function(){
 		this.publish('tools add', this.element);
@@ -30,7 +30,7 @@ new Unit({
 
 	onConnect: function(){
 		this.connected = true;
-		this.element.set('text', '☄ online');
+		this.element.set('text', '☄').set('title', 'online');
 		this.publish('planet connect');
 	},
 
@@ -42,7 +42,7 @@ new Unit({
 
 	onDisconnect: function(){
 		this.connected = false;
-		this.element.set('text', '☉ local');
+		this.element.set('text', '☉').set('title', 'local');
 		this.publish('planet disconnect');
 	}
 

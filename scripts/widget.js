@@ -12,7 +12,7 @@ var Widget = new Class({
 	},
 
 	build: function(label){
-		this.element = new Element('section.widget').adopt([
+		this.element = new Element('section.well').adopt([
 			new Element('h1', {text: label}),
 			new Element('span.remove[html=&#10006;]', { // &#10005;
 				events: {

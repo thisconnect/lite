@@ -10,16 +10,15 @@ new Unit({
 		});
 	},
 
-	toolbar: new Element('form.form-inline'),
+	tools: new Element('form.form-inline'),
 	content: new Element('div'),
 
 	readySetup: function(){
-		$(document.body).adopt([this.toolbar, this.content]);
+		$(document.body).adopt([this.tools, this.content]);
 	},
 
 	addTool: function(){
-		this.toolbar.adopt(arguments);
-		this.toolbar.appendText(' ');
+		this.tools.adopt(arguments).appendText(' ');
 	},
 
 	widgets: {},
