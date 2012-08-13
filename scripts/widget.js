@@ -12,13 +12,15 @@ var Widget = new Class({
 	},
 
 	build: function(label){
-		this.element = new Element('section.well.form-horizontal').adopt([
-			new Element('button.close[html="&times;"]', { // &#10005;
+		this.element = new Element('form.form-horizontal').adopt([
+			new Element('h1', {text: label + ' '}).grab(
+			new Element('button.close[html="&#10799;"]', { // × &#10005; &#10799; &times;
 				events: {
 					click: this.onRemove.bind(this)
 				}
-			}),
-			new Element('h4', {text: label})
+			})
+			)
+			
 		]);
 	},
 

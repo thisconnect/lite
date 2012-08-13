@@ -1,14 +1,50 @@
-html {
-	overflow-y: scroll;
-}
+html { overflow-y: scroll; }
 
-body {
-	padding: 1em;
-}
+/* body { padding: 1em; } */
 
 ::selection { background: transparent; }
 ::-moz-selection { background: transparent; }
 
-input[type=range] {
- height: 28px;
+input[type=range] { height: 28px; }
+
+h1 .close {
+	float: none;
+	font-size: 30px;
+	line-height: 36px;
+	vertical-align: top;
+}
+
+.container-fluid {
+	padding-top: 20px;
+}
+
+@media (max-width: 767px) {
+
+	.row-fluid select[class*="span"] {
+		width: 99.99999998999999% !important;
+	}
+
+}
+
+@media (min-width:767px) {
+
+
+	#tools,
+	.fixed {
+		bottom: 0;
+		left: 10px;
+		top: 10px;
+		right: 0;
+	}
+
+	#tools {
+		overflow-x: hidden;
+		overflow-y: auto;
+		position: absolute;
+	}
+
+	.fixed {
+		position: fixed;
+	}
+
 }

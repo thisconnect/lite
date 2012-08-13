@@ -4,15 +4,16 @@ new Unit({
 		this.subscribe('descriptor add', this.parse);
 	},
 
-	element: new Element('select'),
+	element: new Element('select.span12'),
 
-	dispatcher: new Element('button.btn[text=add]'),
+	dispatcher: new Element('button.btn.btn-primary[text="+"][title=add]'),
 
 	readySetup: function(){
-		this.publish('tools add', new Element('div.form-inline.pull-left')
-			.adopt(this.element)
+		this.publish('tools add', new Element('div.control-group.well')
+			
+			.grab(this.element)
 			.appendText(' ')
-			.adopt(this.dispatcher)
+			.grab(this.dispatcher)
 		);
 		//this.publish('tools add', [this.element]);
 		

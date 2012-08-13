@@ -12,7 +12,7 @@ Controller.Int = new Class({
 		var that = this;
 		this.parent();
 		
-		var control = this.control = new Element('input', {
+		var control = this.control = new Element('input.input-xlarge', {
 			'value': this.value
 		});
 
