@@ -12,28 +12,27 @@ var Widget = new Class({
 	},
 
 	build: function(label){
-		this.element = new Element('section.well').adopt([
-			new Element('h1', {text: label}),
-			new Element('span.remove[html=&#10006;]', { // &#10005;
+		this.element = new Element('section.well.form-horizontal').adopt([
+			new Element('button.close[html="&times;"]', { // &#10005;
 				events: {
 					click: this.onRemove.bind(this)
 				}
-			})
+			}),
+			new Element('h4', {text: label})
 		]);
 	},
 
 	buildControllers: function(controllers){
-		var container = new Element('div.controllers').inject(this.element);
 		for (var name in controllers){
 			if (controllers.hasOwnProperty(name)){
-				this.addController([this.id, this.name, name], controllers[name]).attach(container);
+				this.addController([this.id, this.name, name], controllers[name]).attach(this.element);
 			}
 		};
 	},
 
 	addController: function(path, controller){
 		var self = this,
-			control = new Controller(controller.type, controller);
+			control = new Controller[controller.type.capitalize()](controller);
 
 		control.addEvent('quickchange', function(value){
 			self.publish('widget update', {

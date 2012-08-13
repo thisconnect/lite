@@ -2,17 +2,37 @@ var Controller = new Class({
 
 	Implements: [Events, Bound],
 
-	$enabled: true,
-
 	initialize: function(type, data){
-		type = type.capitalize();
-		return Controller[type] ? new Controller[type](data) : this;
+		this.build();
 	},
+
+	$element: null,
 
 	build: function(){
-		this.element = new Element('div.controller');
+		this.$element = new Element('div.control-group');
 		return this;
 	},
+
+	add: function(){
+		this.$element.adopt(arguments);
+		return this;
+	},
+
+	attach: function(container, position){
+		this.$element.inject(container || document.body, position || 'bottom');
+		return this;
+	},
+
+	detach: function(){
+		this.$element.dispose();
+		return this;
+	},
+
+	set: function(value){
+		return this;
+	},
+
+	$enabled: true,
 
 	isEnabled: function(){
 		return !!this.$enabled;
@@ -25,20 +45,6 @@ var Controller = new Class({
 
 	disable: function(){
 		this.$enabled = false;
-		return this;
-	},
-
-	attach: function(container, position){
-		this.element.inject(container || document.body, position || 'bottom');
-		return this;
-	},
-
-	detach: function(){
-		this.element.dispose();
-		return this;
-	},
-
-	set: function(value){
 		return this;
 	}
 

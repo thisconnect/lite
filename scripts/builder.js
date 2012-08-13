@@ -10,12 +10,9 @@ new Unit({
 		});
 	},
 
-	tools: new Element('form.form-inline'),
-	content: new Element('div'),
+	readySetup: function(){},
 
-	readySetup: function(){
-		$(document.body).adopt([this.tools, this.content]);
-	},
+	tools: document.id('tools'),
 
 	addTool: function(){
 		this.tools.adopt(arguments).appendText(' ');
@@ -38,6 +35,8 @@ new Unit({
 	},
 
 	state: {},
+
+	content: document.id('content'),
 
 	onCreate: function(pos, data){
 		for (var widget in data){

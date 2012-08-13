@@ -3,37 +3,35 @@ Controller.Int = new Class({
 	Extends: Controller,
 
 	initialize: function(data){
-		this.label = data.label;
-		//this.value = data.value;
-		this.range = data.range;
-		this.build();
+		this.build(data);
 	},
 
-	build: function(){
-		var self = this,
-			label = new Element('label', {
-				text: this.label
-			}),
-			control = this.control = new Element('input', {
-				value: this.value,
-				events: {
-					change: function(e){
-						self.onChange(this.value);
-					}
-				}
-			});
+	control: null,
 
-		if (typeOf(this.range) == 'array'){
-			control.set({
-				type: 'range',
-				min: this.range[0],
-				max: this.range[1]
-			});
-		}
-
+	build: function(data){
+		var that = this;
 		this.parent();
-		this.element.adopt(label);
-		control.inject(label, 'top');
+		
+		var control = this.control = new Element('input', {
+			'value': this.value
+		});
+
+		control.addEvent('change', function(e){
+			that.onChange(this.value);
+		});
+
+		if (typeOf(data.range) == 'array') control.set({
+			'type': 'range',
+			'min': data.range[0],
+			'max': data.range[1]
+		});
+
+		this.add([
+			new Element('label.control-label', {
+				'text': data.label
+			}),
+			new Element('div.controls').grab(control)
+		]);
 	},
 
 	onChange: function(value){

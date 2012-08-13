@@ -3,26 +3,28 @@ Controller.Bool = new Class({
 	Extends: Controller,
 
 	initialize: function(data){
-		this.label = data.label;
-		//this.value = data.value;
-		this.build();
+		this.build(data);
 	},
 
-	build: function(){
+	control: null,
+
+	build: function(data){
+		var that = this;
 		this.parent();
 
-		var self = this,
-			label = new Element('label');	
+		var control = this.control = new Element('input[type=checkbox]');
 
-		this.control = new Element('input[type=checkbox]', {
-			events: {
-				change: function(){
-					self.onChange(this.checked);
-				}
-			}
-		}).inject(label);
+		control.addEvent('change', function(){
+			that.onChange(this.checked);
+		});
 
-		label.appendText(this.label).inject(this.element);
+		var label = new Element('label.checkbox', {
+			'text': data.label
+		});
+
+		control.inject(label, 'top');
+
+		this.add(new Element('div.controls').grab(label));
 	},
 
 	onChange: function(value){

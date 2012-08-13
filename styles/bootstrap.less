@@ -39,7 +39,7 @@
 @import "alerts.less"; // Note: alerts share common CSS with buttons and thus have styles in buttons.less
 
 // Components: Nav
-// @import "navs.less";
+@import "navs.less";
 // @import "navbar.less";
 // @import "breadcrumbs.less";
 // @import "pagination.less";
@@ -60,6 +60,8 @@
 
 // Utility classes
 @import "utilities.less"; // Has to be last to override when necessary
+
+@import "responsive-767px-max.less";
 
 // this.connect( )
 @import "thisconnect.less";

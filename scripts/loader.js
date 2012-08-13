@@ -16,7 +16,7 @@ new Unit({
 	count: 0,
 
 	parseManifest: function(data){
-		data = JSON.decode(data);
+		data = JSON.parse(data);
 		if (!data) return null;
 
 		var i = this.count = data.length;
@@ -27,7 +27,7 @@ new Unit({
 	},
 
 	parseDescriptor: function(data){
-		if (typeof data == 'string') data = JSON.decode(data);
+		if (typeof data == 'string') data = JSON.parse(data);
 		if (!data) return null;
 		data.name = data.name.toLowerCase();
 		this.publish('descriptor add', data);

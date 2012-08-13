@@ -9,8 +9,13 @@ new Unit({
 	dispatcher: new Element('button.btn[text=add]'),
 
 	readySetup: function(){
-		this.publish('tools add', [this.element]);
-		this.publish('tools add', [this.dispatcher]);
+		this.publish('tools add', new Element('div.form-inline.pull-left')
+			.adopt(this.element)
+			.appendText(' ')
+			.adopt(this.dispatcher)
+		);
+		//this.publish('tools add', [this.element]);
+		
 		this.dispatcher.addEvent('click', this.onSelect.bind(this));
 	},
 
