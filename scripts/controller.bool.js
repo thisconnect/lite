@@ -6,8 +6,6 @@ Controller.Bool = new Class({
 		this.build(data);
 	},
 
-	control: null,
-
 	build: function(data){
 		var that = this;
 		this.parent();
@@ -24,7 +22,7 @@ Controller.Bool = new Class({
 
 		control.inject(label, 'top');
 
-		this.add(new Element('div.controls').grab(label));
+		this.adopt(new Element('div.controls').grab(label));
 	},
 
 	onChange: function(value){

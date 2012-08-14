@@ -1,11 +1,36 @@
-html { overflow-y: scroll; }
+html {
+	overflow-y: scroll;
+}
 
-/* body { padding: 1em; } */
 
 ::selection { background: transparent; }
 ::-moz-selection { background: transparent; }
 
-input[type=range] { height: 28px; }
+
+::-webkit-scrollbar {
+	width: 10px;
+	height: 10px;
+}
+::-webkit-scrollbar-button:start:decrement,
+::-webkit-scrollbar-button:end:increment {
+	display: none;
+}
+
+::-webkit-scrollbar-track-piece {
+	background-color: #fff;
+	-webkit-border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:vertical {
+	-webkit-border-radius: 6px;
+	background: @grayLight;
+	border: 2px solid white;
+}
+
+
+input[type=range] {
+	height: 28px;
+}
 
 h1 .close {
 	float: none;
@@ -27,7 +52,6 @@ h1 .close {
 }
 
 @media (min-width:767px) {
-
 
 	#tools,
 	.fixed {

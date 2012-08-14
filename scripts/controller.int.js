@@ -6,18 +6,16 @@ Controller.Int = new Class({
 		this.build(data);
 	},
 
-	control: null,
-
 	build: function(data){
 		var that = this;
 		this.parent();
-		
+
 		var control = this.control = new Element('input.input-xlarge', {
 			'value': this.value
 		});
 
 		control.addEvent('change', function(e){
-			that.onChange(this.value);
+			if (that.isEnabled()) that.fireEvent('quickchange', this.value);
 		});
 
 		if (typeOf(data.range) == 'array') control.set({
@@ -26,7 +24,7 @@ Controller.Int = new Class({
 			'max': data.range[1]
 		});
 
-		this.add([
+		this.adopt([
 			new Element('label.control-label', {
 				'text': data.label
 			}),

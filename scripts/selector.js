@@ -6,17 +6,17 @@ new Unit({
 
 	element: new Element('select.span12'),
 
-	dispatcher: new Element('button.btn.btn-primary[text="+"][title=add]'),
+	dispatcher: new Element('button.btn.btn-primary', {
+		text: 'create',
+		title: 'add a new element'
+	}),
 
 	readySetup: function(){
 		this.publish('tools add', new Element('div.control-group.well')
-			
 			.grab(this.element)
 			.appendText(' ')
 			.grab(this.dispatcher)
 		);
-		//this.publish('tools add', [this.element]);
-		
 		this.dispatcher.addEvent('click', this.onSelect.bind(this));
 	},
 

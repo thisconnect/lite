@@ -5,44 +5,56 @@ var Widget = new Class({
 	initialize: function(id, data){
 		this.setupUnit();
 		this.id = id;
+		this.label = data.label;
+		this.description = data.description;
 		this.name = data.name;
 
-		this.build(data.label + ' (' + this.id + ')');
+		this.build();
 		this.buildControllers(data.controllers);
 	},
 
-	build: function(label){
-		this.element = new Element('form.form-horizontal').adopt([
-			new Element('h1', {text: label + ' '}).grab(
-			new Element('button.close[html="&#10799;"]', { // × &#10005; &#10799; &times;
+	build: function(){
+		this.element = new Element('section');
+		
+		new Element('h1', {
+			text: this.label
+		}).adopt([
+			(!this.description) ? null : new Element('small', {
+				text: ' ' + this.description + ' '
+			}),
+			new Element('button.close[text=⨯]', {
+				title: 'destroy element with ID ' + this.id + ' (' + this.label + ')',
 				events: {
 					click: this.onRemove.bind(this)
 				}
 			})
-			)
-			
-		]);
+		]).inject(this.element);
+
+		this.form = new Element('form.form-horizontal').inject(this.element);
 	},
 
 	buildControllers: function(controllers){
 		for (var name in controllers){
 			if (controllers.hasOwnProperty(name)){
-				this.addController([this.id, this.name, name], controllers[name]).attach(this.element);
+				this.addController([this.id, this.name, name], controllers[name]).attach(this.form);
 			}
 		};
 	},
 
 	addController: function(path, controller){
-		var self = this,
+		var that = this,
 			control = new Controller[controller.type.capitalize()](controller);
 
 		control.addEvent('quickchange', function(value){
-			self.publish('widget update', {
+			that.publish('widget update', {
 				'path': path,
 				'value': value
 			});
 		});
-		this.subscribe('planet update ' + path.join(' '), this.onStateUpdate.bind(control));
+		var bound = {
+			update: this.onStateUpdate.bind(control)
+		};
+		this.subscribe('planet update ' + path.join(' '), bound.update);
 		return control;
 	},
 

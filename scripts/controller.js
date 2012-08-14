@@ -13,11 +13,6 @@ var Controller = new Class({
 		return this;
 	},
 
-	add: function(){
-		this.$element.adopt(arguments);
-		return this;
-	},
-
 	attach: function(container, position){
 		this.$element.inject(container || document.body, position || 'bottom');
 		return this;
@@ -25,6 +20,11 @@ var Controller = new Class({
 
 	detach: function(){
 		this.$element.dispose();
+		return this;
+	},
+
+	adopt: function(){
+		this.$element.adopt(arguments);
 		return this;
 	},
 

@@ -6,7 +6,7 @@ new Unit({
 			'widget update': this.post,
 			'widget remove': this.remove,
 			'planet connection': this.connect,
-			'descriptor ready': this.readyDescriptors
+			'descriptor ready': this.onReadyDescriptors
 		});
 	},
 
@@ -44,7 +44,7 @@ new Unit({
 	ready: false,
 	queue: {},
 
-	readyDescriptors: function(){
+	onReadyDescriptors: function(){
 		this.ready = true;
 		this.onPut(this.queue);
 		this.queue = {};
