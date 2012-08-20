@@ -10,10 +10,12 @@ Controller.Bool = new Class({
 		var that = this;
 		this.parent();
 
-		var control = this.control = new Element('input[type=checkbox]');
+		var control = this.control = new Element('input[type=checkbox]', {
+			'name': JSON.stringify(data)
+		});
 
 		control.addEvent('change', function(){
-			that.onChange(this.checked);
+			that.fireEvent('quickchange', this.checked);
 		});
 
 		var label = new Element('label.checkbox', {
@@ -23,10 +25,6 @@ Controller.Bool = new Class({
 		control.inject(label, 'top');
 
 		this.adopt(new Element('div.controls').grab(label));
-	},
-
-	onChange: function(value){
-		if (this.isEnabled()) this.fireEvent('quickchange', value);
 	},
 
 	set: function(value){
