@@ -15,7 +15,7 @@ Controller.Int = new Class({
 		});
 
 		control.addEvent('change', function(e){
-			if (that.isEnabled()) that.fireEvent('quickchange', this.value);
+			that.fireEvent('quickchange', this.value);
 		});
 
 		if (typeOf(data.range) == 'array') control.set({
@@ -30,10 +30,6 @@ Controller.Int = new Class({
 			}),
 			new Element('div.controls').grab(control)
 		]);
-	},
-
-	onChange: function(value){
-		if (this.isEnabled()) this.fireEvent('quickchange', value);
 	},
 
 	set: function(value){

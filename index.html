@@ -19,7 +19,6 @@
 	</div>
 </div>
 
-
 <!-- <script src="//localhost:8999/socket.io/socket.io.js"></script> -->
 <script src="socket.io/socket.io.js"></script>
 <script src="support/mootools-min.js"></script>
@@ -30,38 +29,12 @@
 <script src="scripts/controller.bool.js"></script>
 <script src="scripts/controller.int.js"></script>
 
-<script src="scripts/builder.js"></script>
-<script src="scripts/selector.js"></script>
-<script src="scripts/loader.js"></script>
+<script src="scripts/build.js"></script>
+<script src="scripts/select.js"></script>
+<script src="scripts/load.js"></script>
 <script src="scripts/connect.js"></script>
 <script src="scripts/planet.js"></script>
 
-<script>
-new Unit({
-	initSetup: function(){
-		this.subscribe({
-			'descriptor add': this.log.bind(['descriptor add']),
-			'descriptor ready': this.log.bind(['descriptor ready']),
-			
-			'widget select': this.log.bind(['widget select']),
-			'widget create': this.log.bind(['widget create']),
-			'widget update': this.log.bind(['widget update']),
-			'widget remove': this.log.bind(['widget remove']),
-
-			'tools add': this.log.bind(['tools add']),
-			
-			'planet connection': this.log.bind(['planet connection']),
-			'planet connect': this.log.bind(['planet connect']),
-			'planet disconnect': this.log.bind(['planet disconnect']),
-			'planet remove': this.log.bind(['planet remove']),
-			
-			'put': this.log.bind(['put'])
-		});
-	},
-	log: function(){
-		console.log(this, arguments);
-	}
-});
-</script>
+<script src="scripts/log.js"></script>
 
 

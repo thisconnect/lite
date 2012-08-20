@@ -12,12 +12,6 @@ new Unit({
 
 	readySetup: function(){},
 
-	tools: document.id('tools'),
-
-	addTool: function(){
-		this.tools.adopt(arguments).appendText(' ');
-	},
-
 	widgets: {},
 
 	addDescriptor: function(data){
@@ -30,7 +24,7 @@ new Unit({
 		var data = {},
 			dest = data[this.counter] = {};
 
-		dest[name] = this.widgets[name].payload;
+		dest[name] = this.widgets[name]['payload'];
 		this.publish('put', data);
 	},
 
@@ -43,7 +37,9 @@ new Unit({
 			this.state[pos] = new Widget(pos, this.widgets[widget]);
 			this.state[pos].attach(this.content);
 			for (var control in data[widget]){
-				this.publish('planet update ' + [pos, widget, control].join(' '), data[widget][control]);
+				this.publish('planet update ' + [pos, widget, control].join(' '),
+					data[widget][control]
+				);
 			}
 			if (this.counter <= pos) this.counter = pos + 1;
 		}
@@ -52,6 +48,12 @@ new Unit({
 	onRemove: function(id){
 		this.state[id].destroy();
 		delete this.state[id]; 
+	},
+
+	tools: document.id('tools'),
+
+	addTool: function(){
+		this.tools.adopt(arguments).appendText(' ');
 	}
 
 });
