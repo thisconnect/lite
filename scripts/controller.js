@@ -2,7 +2,7 @@ var Controller = new Class({
 
 	Implements: [Events, Bound],
 
-	initialize: function(type, data){
+	initialize: function(data){
 		this.build();
 	},
 

@@ -32,16 +32,20 @@ new Unit({
 		var bound = {
 			onPut: this.onPut.bind(this),
 			onRemove: this.onRemove.bind(this),
-			onPost: this.onPost.bind(this)
+			onPost: this.onPost.bind(this),
+			onService: this.onService.bind(this)
 		};
 		this.socket = socket;
 		socket.on('initial state', bound.onPut);
 		socket.on('put', bound.onPut);
 		socket.on('post', bound.onPost);
 		socket.on('delete', bound.onRemove);
+		
+		io.connect('/services').on('setup', bound.onService);
 	},
 
 	ready: false,
+
 	queue: {},
 
 	onReadyDescriptors: function(){
@@ -61,6 +65,10 @@ new Unit({
 		if (data.key != null) this.publish('planet update ' + data.key, data.value);
 		if (typeof data.path != 'string') data.path = data.path.join(' ');
 		this.publish('planet update ' + data.path, data.value);
+	},
+
+	onService: function(){
+		this.publish('service add', arguments);
 	}
 
 });

@@ -34,15 +34,18 @@ new Unit({
 
 	onCreate: function(pos, data){
 		for (var widget in data){
-			this.state[pos] = new Widget(pos, this.widgets[widget]);
-			this.state[pos].attach(this.content);
-			for (var control in data[widget]){
-				this.publish('planet update ' + [pos, widget, control].join(' '),
-					data[widget][control]
-				);
-			}
-			if (this.counter <= pos) this.counter = pos + 1;
+			this.addWidget(widget, pos, data);
 		}
+	},
+
+	addWidget: function(widget, pos, data){
+		this.state[pos] = new Widget(pos, this.widgets[widget]).attach(this.content);
+		for (var control in data[widget]){
+			this.publish('planet update ' + [pos, widget, control].join(' '),
+				data[widget][control]
+			);
+		}
+		if (this.counter <= pos) this.counter = pos + 1;
 	},
 
 	onRemove: function(id){

@@ -6,9 +6,6 @@ new Unit({
 		this.publish('tools add', this.element);
 		this.element.addEvent('click', this.onToggle.bind(this));
 		this.connect();
-		io.connect('/services').on('setup', function(){
-			console.log('services', arguments);
-		});
 	},
 
 	onToggle: function(e){

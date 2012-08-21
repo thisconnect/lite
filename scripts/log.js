@@ -7,6 +7,8 @@ new Unit({
 			'planet disconnect': this.log.bind(['planet disconnect']),
 			'planet remove': this.log.bind(['planet remove']),
 
+			'service add': this.log.bind(['service add']),
+
 			'descriptor add': this.log.bind(['descriptor add']),
 			'descriptor ready': this.log.bind(['descriptor ready']),
 			

@@ -15,10 +15,11 @@ Controller.Int = new Class({
 		});
 
 		control.addEvent('change', function(e){
-			that.fireEvent('quickchange', this.value);
+			that.fireEvent('quickchange', parseInt(this.value));
 		});
 
-		if (typeOf(data.range) == 'array') control.set({
+		if (typeOf(data.range) != 'array') control.set('type', 'number');
+		else control.set({
 			'type': 'range',
 			'min': data.range[0],
 			'max': data.range[1]
