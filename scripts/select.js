@@ -12,10 +12,11 @@ new Unit({
 	}),
 
 	readySetup: function(){
-		this.publish('tools add', new Element('div.control-group.well')
-			.grab(this.element)
-			.appendText(' ')
-			.grab(this.dispatcher)
+		this.publish('tools add',
+			new Element('div.control-group.well')
+				.grab(this.element)
+				.appendText(' ')
+				.grab(this.dispatcher)
 		);
 		this.dispatcher.addEvent('click', this.onSelect.bind(this));
 	},

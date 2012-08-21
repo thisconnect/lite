@@ -8,12 +8,6 @@ new Unit({
 		this.connect();
 	},
 
-	onToggle: function(e){
-		e.preventDefault();
-		if (this.connected) this.disconnect();
-		else this.socket.socket.reconnect();
-	},
-
 	socket: null,
 
 	connect: function(uri){
@@ -27,7 +21,7 @@ new Unit({
 
 	onConnect: function(){
 		this.connected = true;
-		this.element.set('text', '☄').set('title', 'online');
+		this.element.set({'title': 'online', 'text': '☄'});
 		this.publish('planet connect');
 	},
 
@@ -39,8 +33,14 @@ new Unit({
 
 	onDisconnect: function(){
 		this.connected = false;
-		this.element.set('text', '☉').set('title', 'local');
+		this.element.set({'title': 'local', 'text': '☉'});
 		this.publish('planet disconnect');
+	},
+
+	onToggle: function(e){
+		e.preventDefault();
+		if (this.connected) this.disconnect();
+		else this.socket.socket.reconnect();
 	}
 
 });
