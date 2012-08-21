@@ -12,7 +12,7 @@ Run (python)
 
 	python -m SimpleHTTPServer 8004
 
-Browse to http://localhost:8004/
+Browse to [//localhost:8004](http://localhost:8004/)
 
 
 Setup (node.js)
