@@ -10,7 +10,7 @@
 		"type": "bool"
 	}],
 	"payload": {
-		0: 1,
-		1: true
+		"0": 1,
+		"1": true
 	}
 }
