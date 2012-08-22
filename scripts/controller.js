@@ -30,7 +30,7 @@ var Controller = new Class({
 
 	set: function(value){
 		return this;
-	},
+	}/*,
 
 	$enabled: true,
 
@@ -46,6 +46,6 @@ var Controller = new Class({
 	disable: function(){
 		this.$enabled = false;
 		return this;
-	}
+	}*/
 
 });

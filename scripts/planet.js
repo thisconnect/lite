@@ -22,6 +22,7 @@ new Unit({
 	onConnect: function(){
 		this.connected = true;
 		this.element.set({'title': 'online', 'text': '☄'});
+		this.element.addClass('active');
 		this.publish('planet connect');
 	},
 
@@ -34,6 +35,7 @@ new Unit({
 	onDisconnect: function(){
 		this.connected = false;
 		this.element.set({'title': 'local', 'text': '☉'});
+		this.element.removeClass('active');
 		this.publish('planet disconnect');
 	},
 

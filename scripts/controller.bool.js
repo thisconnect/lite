@@ -10,9 +10,7 @@ Controller.Bool = new Class({
 		var that = this;
 		this.parent();
 
-		var control = this.control = new Element('input[type=checkbox]', {
-			'name': JSON.stringify(data)
-		});
+		var control = this.control = new Element('input[type=checkbox]');
 
 		control.addEvent('change', function(){
 			that.fireEvent('quickchange', this.checked);
