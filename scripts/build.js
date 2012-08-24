@@ -2,11 +2,11 @@ new Unit({
 
 	initSetup: function(){
 		this.subscribe({
-			'descriptor add': this.addDescriptor,
-			'widget select': this.create,
+			'descriptor add': this.onAddDescriptor,
+			'widget select': this.onSelect,
 			'widget create': this.onCreate,
 			'planet remove': this.onRemove,
-			'tools add': this.addTool
+			'tools add': this.onAddTool
 		});
 	},
 
@@ -14,13 +14,13 @@ new Unit({
 
 	widgets: {},
 
-	addDescriptor: function(data){
+	onAddDescriptor: function(data){
 		this.widgets[data.name] = data;
 	},
 
 	counter: 0,
 
-	create: function(name){
+	onSelect: function(name){
 		var data = {},
 			dest = data[this.counter] = {};
 
@@ -55,7 +55,7 @@ new Unit({
 
 	tools: document.id('tools'),
 
-	addTool: function(){
+	onAddTool: function(){
 		this.tools.adopt(arguments).appendText(' ');
 	}
 

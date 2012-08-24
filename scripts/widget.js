@@ -52,7 +52,7 @@ var Widget = new Class({
 			});
 		});
 		var bound = {
-			update: this.onStateUpdate.bind(control)
+			update: this.onUpdate.bind(control)
 		};
 		this.subscribe('planet update ' + path.join(' '), bound.update);
 		return control;
@@ -76,7 +76,7 @@ var Widget = new Class({
 		this.element.destroy();
 	},
 
-	onStateUpdate: function(value){
+	onUpdate: function(value){
 		this.set(value);
 	}
 

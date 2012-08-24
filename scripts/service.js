@@ -1,8 +1,12 @@
 new Unit({
 
+	socket: null,
+
 	initSetup: function(){
-		this.subscribe('service create /station/dsp', this.build);
-		io.connect('/services').on('setup', this.onSetup.bind(this));
+		this.subscribe('service create dsp', this.build);
+		this.socket = io.connect('/service');
+		this.socket.on('setup', this.onSetup.bind(this));
+		this.socket.on('set', this.onSet.bind(this));
 	},
 
 	onSetup: function(data){
@@ -11,11 +15,7 @@ new Unit({
 		}
 	},
 
-	request: new Request({
-		method: 'get'
-	}),
-
-	element: new Element('button.btn[text=♫]'),
+	element: new Element('button.btn.btn-mini[text=♫]'),
 
 	build: function(){
 		this.element.addEvent('click', this.onToggle.bind(this));
@@ -26,27 +26,18 @@ new Unit({
 
 	onToggle: function(e){
 		e.preventDefault();
-		this.send('/station/dsp', this.onToggled.bind(this));
+		this.send('dsp', this.dsp);
 	},
 
-	onToggled: function(response){
-		response = JSON.parse(response);
-		this.dsp = (response.dsp == 'on' ? true : false);
+	send: function(service, state){
+		this.socket.emit('set', service, !state ? 'on' : 'off');
+	},
+
+	onSet: function(service, state){
+		this[service] = state == 'on' ? true : false;
 		this.element.set({
 			'title': 'turn dsp ' + (this.dsp ? 'on' : 'off')
 		})[this.dsp ? 'addClass' : 'removeClass']('active');
-	},
-
-	send: function(url, callback){
-		if (this.request.isRunning()) return;
-		this.request.removeEvents('success');
-		if (callback) this.request.addEvent('success', callback);
-		this.request.send({
-			'url': url,
-			'data': {
-				'dsp': (!this.dsp ? 'on' : 'off')
-			}
-		});
 	}
 
 });

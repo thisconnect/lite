@@ -1,6 +1,6 @@
 new Unit({
 
-	element: new Element('button.btn[text="☉"][title=local]'),
+	element: new Element('button.btn.btn-mini[text="☉"][title=local]'),
 
 	readySetup: function(){
 		this.publish('tools add', this.element);
