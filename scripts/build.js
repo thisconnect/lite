@@ -51,6 +51,7 @@ new Unit({
 	onRemove: function(id){
 		this.state[id].destroy();
 		delete this.state[id]; 
+		this.publish('put', 'delete ' + id + ';\n');
 	},
 
 	tools: document.id('tools'),

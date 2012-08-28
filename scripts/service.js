@@ -30,11 +30,11 @@ new Unit({
 	},
 
 	send: function(service, state){
-		this.socket.emit('set', service, !state ? 'on' : 'off');
+		this.socket.emit('set', service, !state);
 	},
 
 	onSet: function(service, state){
-		this[service] = state == 'on' ? true : false;
+		this[service] = state;
 		this.element.set({
 			'title': 'turn dsp ' + (this.dsp ? 'on' : 'off')
 		})[this.dsp ? 'addClass' : 'removeClass']('active');
