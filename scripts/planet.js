@@ -42,7 +42,10 @@ new Unit({
 	onToggle: function(e){
 		e.preventDefault();
 		if (this.connected) this.disconnect();
-		else this.socket.socket.reconnect();
+		else {
+			this.element.addClass('active');
+			this.socket.socket.reconnect();
+		}
 	}
 
 });
