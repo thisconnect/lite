@@ -14,10 +14,14 @@ var Widget = new Class({
 	},
 
 	build: function(){
+		var that = this;
 		this.element = new Element('section');
 		
 		new Element('h1', {
-			text: this.label
+			text: this.label,
+			events: {
+				click: function(){ that.form.toggleClass('hidden'); }
+			}
 		}).adopt([
 			(!this.description) ? null : new Element('small', {
 				text: ' ' + this.description + ' '
@@ -43,7 +47,7 @@ var Widget = new Class({
 
 	addController: function(path, controller){
 		var that = this,
-			control = new Controller[controller.type.capitalize()](controller);
+			control = new Controller(controller.type, controller);
 
 		control.addEvent('quickchange', function(value){
 			that.publish('widget update', {
