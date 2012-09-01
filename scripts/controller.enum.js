@@ -9,19 +9,21 @@ Controller.Enum = new Class({
 
 	build: function(data){
 		this.parent();
-		this.element = new Element('select.span12');
-		this.adopt([
-			new Element('label.control-label', {
+
+		var label = this.add('label.control-label', {
 				'text': data.label
 			}),
-			new Element('div.controls').grab(this.element)
-		]);
+			wrapper = this.add('div.controls'),
+			select = this.element = new Element('select.span12');
+
+		wrapper.adopt(select);
+
 		var i = data.values.length;
 		while (i--){
 			new Element('option', {
 				text: data.values[i].capitalize(),
 				value: data.values[i]
-			}).inject(this.element, 'top');
+			}).inject(select, 'top');
 		}
 	},
 
@@ -30,7 +32,7 @@ Controller.Enum = new Class({
 	},
 
 	set: function(value){
-		this.element.value = value;
+		this.element.set('value', value);
 		return this;
 	}
 

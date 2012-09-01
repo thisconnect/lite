@@ -9,13 +9,15 @@ Controller.String = new Class({
 
 	build: function(data){
 		this.parent();
-		var input = this.element = new Element('input.span12[type=text]');
-		this.adopt([
-			new Element('label.control-label', {
+
+		var label = this.add('label.control-label', {
 				'text': data.label
 			}),
-			new Element('div.controls').grab(input)
-		]);
+			wrapper = this.add('div.controls'),
+			input = this.element = new Element('input.span12[type=text]');
+
+		wrapper.adopt(input);
+
 		if (data.placeholder) input.set('placeholder', data.placeholder);
 	},
 

@@ -27,7 +27,7 @@ var Widget = new Class({
 				text: ' ' + this.description + ' '
 			}),
 			new Element('button.close[text=⨯]', {
-				title: 'destroy element with ID ' + this.id + ' (' + this.label + ')',
+				title: 'destroy ' + this.label + ' (' + this.id + ')',
 				events: {
 					click: this.onRemove.bind(this)
 				}
@@ -37,11 +37,10 @@ var Widget = new Class({
 		this.form = new Element('form.form-horizontal').inject(this.element);
 	},
 
-	buildControllers: function(controllers){
-		for (var name in controllers){
-			if (controllers.hasOwnProperty(name)){
-				this.addController([this.id, this.name, name], controllers[name]).attach(this.form);
-			}
+	buildControllers: function(controls){
+		for (var name in controls){
+			if (!controls.hasOwnProperty(name)) continue;
+			this.addController([this.id, this.name, name], controls[name]).attach(this.form);
 		};
 	},
 

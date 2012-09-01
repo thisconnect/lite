@@ -7,26 +7,25 @@ Controller.Bool = new Class({
 	},
 
 	build: function(data){
-		var that = this;
 		this.parent();
 
-		var control = this.control = new Element('input[type=checkbox]');
+		var that = this,
+			container = this.add('div.controls'),
+			label = new Element('label.checkbox', {
+				'text': data.label
+			}),
+			input = this.element = new Element('input[type=checkbox]');
 
-		control.addEvent('change', function(){
+		container.adopt(label);
+		label.adopt(input);
+
+		input.addEvent('change', function(){
 			that.fireEvent('quickchange', this.checked);
 		});
-
-		var label = new Element('label.checkbox', {
-			'text': data.label
-		});
-
-		control.inject(label, 'top');
-
-		this.adopt(new Element('div.controls').grab(label));
 	},
 
 	set: function(value){
-		this.control.checked = !!value;
+		this.element.checked = !!value;
 		return this;
 	}
 

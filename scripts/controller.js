@@ -2,8 +2,11 @@ var Controller = new Class({
 
 	Implements: [Events, Bound],
 
-	initialize: function(){
-		this.build();
+	initialize: function(type, data){
+		var array = type.match(/(.*?)\[(.*?)\]/);
+		type = type.capitalize();
+		if (array) return new Controller.Array[type](data);
+		else return Controller[type] ? new Controller[type](data) : this;
 	},
 
 	$element: null,
@@ -23,9 +26,10 @@ var Controller = new Class({
 		return this;
 	},
 
-	adopt: function(){
-		this.$element.adopt(arguments);
-		return this;
+	add: function(selector, options){
+		var element = new Element(selector, options);
+		element.inject(this.$element);
+		return element;
 	},
 
 	set: function(value){
