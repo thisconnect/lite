@@ -2,22 +2,22 @@ html {
 	overflow-y: scroll;
 }
 
-
 ::selection { background: transparent; }
-::-moz-selection { background: transparent; }
 
+::-moz-selection { background: transparent; }
 
 ::-webkit-scrollbar {
 	width: 10px;
 	height: 10px;
 }
+
 ::-webkit-scrollbar-button:start:decrement,
 ::-webkit-scrollbar-button:end:increment {
 	display: none;
 }
 
 ::-webkit-scrollbar-track-piece {
-	background-color: #fff;
+	background-color: @bodyBackground;
 	-webkit-border-radius: 6px;
 }
 
@@ -26,7 +26,6 @@ html {
 	background: @grayLight;
 	border: 2px solid white;
 }
-
 
 input[type=range] {
 	height: 28px;
