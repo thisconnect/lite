@@ -26,6 +26,7 @@ new Unit({
 
 	onToggle: function(e){
 		e.preventDefault();
+		if (!this.dsp) this.element.addClass('active');
 		this.send('dsp', this.dsp);
 	},
 
