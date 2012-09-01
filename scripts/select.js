@@ -25,7 +25,7 @@ new Unit({
 		new Element('option', {
 			value: data.name,
 			text: data.label
-		}).inject(this.element, 'top');
+		}).inject(this.element, 'bottom');
 	},
 
 	onSelect: function(e){
