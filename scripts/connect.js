@@ -39,7 +39,6 @@ new Unit({
 		socket.on('put', bound.onPut);
 		socket.on('post', bound.onPost);
 		socket.on('delete', bound.onRemove);
-		
 	},
 
 	ready: false,
