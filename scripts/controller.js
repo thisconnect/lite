@@ -27,9 +27,7 @@ var Controller = new Class({
 	},
 
 	add: function(selector, options){
-		var element = new Element(selector, options);
-		element.inject(this.$element);
-		return element;
+		return new Element(selector, options).inject(this.$element);
 	},
 
 	set: function(value){
