@@ -1,5 +1,5 @@
 /*!
- * Bootstrap v2.1.0
+ * Bootstrap v2.1.1
  *
  * Copyright 2012 Twitter, Inc
  * Licensed under the Apache License v2.0
@@ -53,27 +53,13 @@
 // Components: Misc
 // @import "thumbnails.less";
 @import "labels-badges.less";
-@import "progress-bars.less";
+// @import "progress-bars.less";
 // @import "accordion.less";
 // @import "carousel.less";
 // @import "hero-unit.less";
 
 // Utility classes
 @import "utilities.less"; // Has to be last to override when necessary
-
-
-
-// Responsive.less
-// For phone and tablet devices
-// -------------------------------------------------------------
-
-
-// REPEAT VARIABLES & MIXINS
-// -------------------------
-// Required since we compile the responsive stuff separately
-
-// @import "variables.less"; // Modify this for custom colors, font-sizes, etc
-// @import "mixins.less";
 
 
 // RESPONSIVE CLASSES
@@ -85,14 +71,14 @@
 // MEDIA QUERIES
 // ------------------
 
-// Phones to portrait tablets and narrow desktops
-@import "responsive-767px-max.less";
+// Large desktops
+@import "responsive-1200px-min.less";
 
 // Tablets to regular desktops
 @import "responsive-768px-979px.less";
 
-// Large desktops
-// @import "responsive-1200px-min.less";
+// Phones to portrait tablets and narrow desktops
+@import "responsive-767px-max.less";
 
 
 // RESPONSIVE NAVBAR
