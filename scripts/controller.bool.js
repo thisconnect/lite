@@ -4,13 +4,13 @@ Controller.Bool = new Class({
 
 	initialize: function(data){
 		this.build(data);
+		this.element.addEvent('change', this.onChange.bind(this));
 	},
 
 	build: function(data){
 		this.parent();
 
-		var that = this,
-			container = this.add('div.controls'),
+		var container = this.add('div.controls'),
 			label = new Element('label.checkbox', {
 				'text': data.label
 			}),
@@ -18,10 +18,10 @@ Controller.Bool = new Class({
 
 		container.adopt(label);
 		label.adopt(input);
+	},
 
-		input.addEvent('change', function(){
-			that.fireEvent('quickchange', this.checked);
-		});
+	onChange: function(){
+		this.fireEvent('quickchange', this.element.checked);
 	},
 
 	set: function(value){
