@@ -14,7 +14,7 @@ Controller.Int = new Class({
 				'text': data.label
 			}),
 			wrapper = this.add('div.controls'),
-			input = this.element = new Element('input.span12[type=number]');
+			input = this.element = new Element('input.span12[type=range]');
 
 		wrapper.adopt(input);
 
