@@ -16,8 +16,9 @@ new Unit({
 		this.socket.emit('put', data);
 	},
 
-	post: function(data){
-		this.socket.emit('post', data);
+	post: function(key, value){
+		console.log(key, value);
+		this.socket.emit('post', key, value);
 	},
 
 	remove: function(id){
@@ -35,7 +36,7 @@ new Unit({
 			onPost: this.onPost.bind(this)
 		};
 		this.socket = socket;
-		socket.on('initial state', bound.onPut);
+		socket.on('get', bound.onPut);
 		socket.on('put', bound.onPut);
 		socket.on('post', bound.onPost);
 		socket.on('delete', bound.onRemove);
@@ -58,10 +59,10 @@ new Unit({
 		}
 	},
 
-	onPost: function(data){
-		if (data.key != null) this.publish('planet update ' + data.key, data.value);
-		if (typeof data.path != 'string') data.path = data.path.join(' ');
-		this.publish('planet update ' + data.path, data.value);
+	onPost: function(key, value){
+		if (key != null) this.publish('planet update ' + key, value);
+		if (typeof key != 'string') key = key.join(' ');
+		this.publish('planet update ' + key, value);
 	}
 
 });

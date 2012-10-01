@@ -49,10 +49,7 @@ var Widget = new Class({
 			control = new Controller(controller.type, controller);
 
 		control.addEvent('quickchange', function(value){
-			that.publish('widget update', {
-				'path': path,
-				'value': value
-			});
+			that.publish('widget update', [path, value]);
 		});
 		var bound = {
 			update: this.onUpdate.bind(control)
