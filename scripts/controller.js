@@ -5,8 +5,8 @@ var Controller = new Class({
 	initialize: function(type, data){
 		var array = type.match(/(.*?)\[(.*?)\]/);
 		type = type.capitalize();
-		if (array) return new Controller.Array[type](data);
-		else return Controller[type] ? new Controller[type](data) : this;
+		if (!array) return new Controller[type](data);
+		return new Controller.Array(array, data);
 	},
 
 	$element: null,
@@ -49,5 +49,22 @@ var Controller = new Class({
 		this.$enabled = false;
 		return this;
 	}*/
+
+});
+
+Controller.Array = new Class({
+
+	Extends: Controller,
+
+	initialize: function(array, data){
+		this.build(array, data);
+	},
+
+	build: function(array, data){
+		console.log(array[1], array[2].toInt(), data);
+		this.parent();
+		//new Controller[array[1]]();
+		//this.add(array[1]);
+	}
 
 });

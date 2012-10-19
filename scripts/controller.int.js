@@ -8,14 +8,14 @@ Controller.Int = new Class({
 	},
 
 	build: function(data){
+		var label, wrapper, input;
 		this.parent();
 
-		var label = this.add('label.control-label', {
-				'text': data.label
-			}),
-			wrapper = this.add('div.controls'),
-			input = this.element = new Element('input.span12[type=range]');
-
+		label = this.add('label.control-label', {
+			'text': data.label
+		});
+		wrapper = this.add('div.controls');
+		input = this.element = new Element('input.span12[type=range]');
 		wrapper.adopt(input);
 
 		if (data.step) input.set('step', data.step);

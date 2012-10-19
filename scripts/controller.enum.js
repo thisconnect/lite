@@ -8,17 +8,15 @@ Controller.Enum = new Class({
 	},
 
 	build: function(data){
+		var label, wrapper, select, i = data.values.length;
 		this.parent();
 
-		var label = this.add('label.control-label', {
-				'text': data.label
-			}),
-			wrapper = this.add('div.controls'),
-			select = this.element = new Element('select.span12');
-
+		label = this.add('label.control-label', {
+			'text': data.label
+		});
+		wrapper = this.add('div.controls');
+		select = this.element = new Element('select.span12');
 		wrapper.adopt(select);
-
-		var i = data.values.length;
 		while (i--){
 			new Element('option', {
 				text: data.values[i].capitalize(),

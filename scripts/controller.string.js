@@ -8,14 +8,14 @@ Controller.String = new Class({
 	},
 
 	build: function(data){
+		var label, wrapper, input;
 		this.parent();
 
-		var label = this.add('label.control-label', {
-				'text': data.label
-			}),
-			wrapper = this.add('div.controls'),
-			input = this.element = new Element('input.span12[type=text]');
-
+		label = this.add('label.control-label', {
+			'text': data.label
+		});
+		wrapper = this.add('div.controls');
+		input = this.element = new Element('input.span12[type=text]');
 		wrapper.adopt(input);
 
 		if (data.placeholder) input.set('placeholder', data.placeholder);

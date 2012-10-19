@@ -8,16 +8,21 @@ Controller.Bool = new Class({
 	},
 
 	build: function(data){
+		var container, label, input;
 		this.parent();
 
-		var container = this.add('div.controls'),
-			label = new Element('label.checkbox', {
-				'text': data.label
-			}),
-			input = this.element = new Element('input[type=checkbox]');
+		label = new Element('label.checkbox', {
+			'text': data.label
+		});
+		input = this.element = new Element('input[type=checkbox]');
 
-		container.adopt(label);
-		label.adopt(input);
+		container = this.add('div.controls');
+		label.inject(container);
+		input.inject(label, 'top');
+	},
+
+	create: function(){
+		return
 	},
 
 	onChange: function(){

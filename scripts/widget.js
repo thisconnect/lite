@@ -16,7 +16,6 @@ var Widget = new Class({
 	build: function(){
 		var that = this;
 		this.element = new Element('section');
-		
 		new Element('h1', {
 			text: this.label,
 			events: {
@@ -33,6 +32,13 @@ var Widget = new Class({
 				}
 			})
 		]).inject(this.element);
+		/*
+		this.element.set('html', '<h1>{label}{description}{close}</h1>'.substitute({
+			label: this.label,
+			description: this.description ? '<small> ' + this.description + ' </small>' : '',
+			close: '<button class="close" title="destroy">⨯</button>'
+		}));
+		*/
 
 		this.form = new Element('form.form-horizontal').inject(this.element);
 	},
@@ -40,7 +46,7 @@ var Widget = new Class({
 	buildControllers: function(controls){
 		for (var name in controls){
 			if (!controls.hasOwnProperty(name)) continue;
-			this.addController([this.id, this.name, name], controls[name]).attach(this.form);
+			this.addController([this.id, this.name, name], controls[name]);
 		};
 	},
 
@@ -55,6 +61,7 @@ var Widget = new Class({
 			update: this.onUpdate.bind(control)
 		};
 		this.subscribe('planet update ' + path.join(' '), bound.update);
+		control.attach(this.form);
 		return control;
 	},
 
