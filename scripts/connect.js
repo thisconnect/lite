@@ -2,8 +2,8 @@ new Unit({
 
 	initSetup: function(){
 		this.subscribe({
-			'put': this.put,
-			'widget update': this.post,
+			'put': this.post,
+			'widget update': this.put,
 			'widget remove': this.remove,
 			'planet connection': this.connect,
 			'descriptor ready': this.onReadyDescriptors
@@ -12,22 +12,20 @@ new Unit({
 
 	socket: null,
 
-	put: function(data){
-	console.log('connect', 'put', data);
-		this.socket.emit('put', data);
+	post: function(data){
+		this.socket.emit('post', data);
 	},
 
-	post: function(key, value){
-		console.log(key, value);
-		this.socket.emit('post', key, value);
+	put: function(key, value){
+		this.socket.emit('put', key, value);
 	},
 
-	remove: function(id){
-		this.socket.emit('delete', id);
+	remove: function(key){
+		this.socket.emit('delete', key);
 	},
 
-	onRemove: function(id){
-		this.publish('planet remove', id);
+	onRemove: function(key){
+		this.publish('planet remove', key);
 	},
 
 	connect: function(socket){
@@ -53,14 +51,14 @@ new Unit({
 		this.queue = {};
 	},
 
-	onPut: function(data){
+	onPost: function(data){
 		if (!this.ready) this.queue = data;
 		else for (var pos in data){
 			this.publish('widget create', [parseFloat(pos), data[pos]]);
 		}
 	},
 
-	onPost: function(key, value){
+	onPut: function(key, value){
 		if (key != null) this.publish('planet update ' + key, value);
 		if (typeof key != 'string') key = key.join(' ');
 		this.publish('planet update ' + key, value);
