@@ -12,7 +12,7 @@ new Unit({
 
 	connect: function(uri){
 		var socket = this.socket = io.connect(uri, {
-			resource: 'io'
+	//		resource: 'io'
 		});
 		socket.on('connect', this.onConnect.bind(this));
 		socket.on('disconnect', this.onDisconnect.bind(this));

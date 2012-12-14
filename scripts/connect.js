@@ -13,6 +13,7 @@ new Unit({
 	socket: null,
 
 	put: function(data){
+	console.log('connect', 'put', data);
 		this.socket.emit('put', data);
 	},
 
