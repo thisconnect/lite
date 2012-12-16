@@ -25,7 +25,7 @@ new Unit({
 		this.connected = true;
 		this.element.set({'title': 'online', 'text': '☄'});
 		this.element.addClass('active');
-		this.publish('planet connect');
+	//	this.publish('planet connect');
 	},
 
 	disconnect: function(){

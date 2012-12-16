@@ -25,7 +25,7 @@ new Unit({
 			dest = data[this.counter] = {};
 
 		dest[name] = this.widgets[name]['payload'];
-		this.publish('put', data);
+		this.publish('post', data);
 	},
 
 	state: {},
@@ -48,10 +48,11 @@ new Unit({
 		if (this.counter <= pos) this.counter = pos + 1;
 	},
 
-	onRemove: function(id){
-		this.state[id].destroy();
-		delete this.state[id]; 
-		this.publish('put', 'delete ' + id + ';\n'); // ???
+	onRemove: function(key){
+		this.state[key].destroy();
+		delete this.state[key];
+		// TODO
+		this.publish('put', 'delete ' + key + ';\n'); // ???
 	},
 
 	tools: document.id('tools'),

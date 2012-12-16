@@ -2,7 +2,7 @@ new Unit({
 
 	initSetup: function(){
 		this.subscribe({
-			'put': this.post,
+			'post': this.post,
 			'widget update': this.put,
 			'widget remove': this.remove,
 			'planet connection': this.connect,
@@ -30,15 +30,15 @@ new Unit({
 
 	connect: function(socket){
 		var bound = {
-			onPut: this.onPut.bind(this),
-			onRemove: this.onRemove.bind(this),
-			onPost: this.onPost.bind(this)
+			put: this.onPut.bind(this),
+			remove: this.onRemove.bind(this),
+			post: this.onPost.bind(this)
 		};
 		this.socket = socket;
-		socket.on('get', bound.onPut);
-		socket.on('put', bound.onPut);
-		socket.on('post', bound.onPost);
-		socket.on('delete', bound.onRemove);
+	//	socket.on('get', bound.onPut);
+		socket.on('put', bound.put);
+		socket.on('post', bound.post);
+	//	socket.on('delete', bound.remove);
 	},
 
 	ready: false,
@@ -47,7 +47,7 @@ new Unit({
 
 	onReadyDescriptors: function(){
 		this.ready = true;
-		this.onPut(this.queue);
+		this.onPost(this.queue);
 		this.queue = {};
 	},
 

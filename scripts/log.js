@@ -3,7 +3,7 @@ new Unit({
 	initSetup: function(){
 		this.subscribe({
 			'planet connection': this.log.bind(['planet connection']),
-			'planet connect': this.log.bind(['planet connect']),
+	//		'planet connect': this.log.bind(['planet connect']),
 			'planet disconnect': this.log.bind(['planet disconnect']),
 			'planet remove': this.log.bind(['planet remove']),
 
@@ -19,7 +19,7 @@ new Unit({
 
 			'tools add': this.log.bind(['tools add']),
 			
-			'put': this.log.bind(['put'])
+			'post': this.log.bind(['post'])
 		});
 	},
 
