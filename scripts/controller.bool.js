@@ -22,7 +22,7 @@ Controller.Bool = new Class({
 	},
 
 	create: function(){
-		return
+		return;
 	},
 
 	onChange: function(){

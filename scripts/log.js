@@ -19,7 +19,7 @@ new Unit({
 
 			'tools add': this.log.bind(['tools add']),
 			
-			'post': this.log.bind(['post'])
+			'merge': this.log.bind(['merge'])
 		});
 	},
 

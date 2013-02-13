@@ -25,7 +25,7 @@ new Unit({
 			dest = data[this.counter] = {};
 
 		dest[name] = this.widgets[name]['payload'];
-		this.publish('post', data);
+		this.publish('merge', data);
 	},
 
 	state: {},
@@ -52,7 +52,7 @@ new Unit({
 		this.state[key].destroy();
 		delete this.state[key];
 		// TODO
-		this.publish('put', 'delete ' + key + ';\n'); // ???
+		this.publish('set', 'delete ' + key + ';\n'); // ???
 	},
 
 	tools: document.id('tools'),

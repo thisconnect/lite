@@ -2,8 +2,8 @@ new Unit({
 
 	initSetup: function(){
 		this.subscribe({
-			'post': this.post,
-			'widget update': this.put,
+			'merge': this.merge,
+			'widget update': this.set,
 			'widget remove': this.remove,
 			'planet connection': this.connect,
 			'descriptor ready': this.onReadyDescriptors
@@ -12,12 +12,12 @@ new Unit({
 
 	socket: null,
 
-	post: function(data){
-		this.socket.emit('post', data);
+	merge: function(data){
+		this.socket.emit('merge', data);
 	},
 
-	put: function(key, value){
-		this.socket.emit('put', key, value);
+	set: function(key, value){
+		this.socket.emit('set', key, value);
 	},
 
 	remove: function(key){
@@ -30,15 +30,19 @@ new Unit({
 
 	connect: function(socket){
 		var bound = {
-			put: this.onPut.bind(this),
+			set: this.onSet.bind(this),
 			remove: this.onRemove.bind(this),
-			post: this.onPost.bind(this)
+			merge: this.onMerge.bind(this)
 		};
+
 		this.socket = socket;
+
 	//	socket.on('get', bound.onPut);
-		socket.on('put', bound.put);
-		socket.on('post', bound.post);
+		socket.on('set', bound.set);
+		socket.on('merge', bound.merge);
 	//	socket.on('delete', bound.remove);
+
+		socket.emit('get', bound.merge);
 	},
 
 	ready: false,
@@ -47,18 +51,18 @@ new Unit({
 
 	onReadyDescriptors: function(){
 		this.ready = true;
-		this.onPost(this.queue);
+		this.onMerge(this.queue);
 		this.queue = {};
 	},
 
-	onPost: function(data){
+	onMerge: function(data){
 		if (!this.ready) this.queue = data;
 		else for (var pos in data){
 			this.publish('widget create', [parseFloat(pos), data[pos]]);
 		}
 	},
 
-	onPut: function(key, value){
+	onSet: function(key, value){
 		if (key != null) this.publish('planet update ' + key, value);
 		if (typeof key != 'string') key = key.join(' ');
 		this.publish('planet update ' + key, value);

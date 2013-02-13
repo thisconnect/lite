@@ -1,15 +1,14 @@
-var http    = require('http'),
-	connect = require('connect'),
+var connect = require('connect'),
 	io      = require('socket.io'),
 	planet  = require('planet');
 
 
-var app = connect()
-	//.use('/instruments', connect.static(__dirname + '/../abslib'))
+var server = connect()
+	.use('/instruments', connect.static(__dirname + '/../../blib'))
 	.use(connect.static(__dirname))
-	.use(connect.favicon('./favicon.ico'));
+	.use(connect.favicon('./favicon.ico'))
+	.listen(8004, 'localhost');
 
-var server = http.createServer(app);
 
 var socket = io.listen(server, {
 	'transports': ['websocket'],
@@ -21,6 +20,5 @@ var socket = io.listen(server, {
 	//'browser client gzip': true
 });
 
-var local = planet(socket, {});
 
-server.listen(8004, 'localhost');
+planet(socket);
