@@ -1,9 +1,6 @@
 [submodule "support/company"]
 	path = support/company
 	url = git://github.com/thisconnect/company.git
-[submodule "support/bootstrap"]
-	path = support/bootstrap
-	url = git://github.com/twitter/bootstrap.git
 [submodule "support/mootools-core"]
 	path = support/mootools-core
 	url = git://github.com/mootools/mootools-core.git
