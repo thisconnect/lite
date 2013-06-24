@@ -1,30 +1,37 @@
 new Unit({
 
+	pre: new Element('pre'),
+
 	initSetup: function(){
+		var pre = this.pre;
+
 		this.subscribe({
-			'planet connection': this.log.bind(['planet connection']),
-	//		'planet connect': this.log.bind(['planet connect']),
-			'planet disconnect': this.log.bind(['planet disconnect']),
-			'planet remove': this.log.bind(['planet remove']),
-
-			'service add': this.log.bind(['service add']),
-
-			'descriptor add': this.log.bind(['descriptor add']),
-			'descriptor ready': this.log.bind(['descriptor ready']),
-			
-			'widget select': this.log.bind(['widget select']),
-			'widget create': this.log.bind(['widget create']),
-			'widget update': this.log.bind(['widget update']),
-			'widget remove': this.log.bind(['widget remove']),
-
-			'tools add': this.log.bind(['tools add']),
-			
-			'merge': this.log.bind(['merge'])
+			'socket connect': function(){
+				pre.set('text', '');
+			},
+			'system connect': function(system){
+				system.emit('get', function(data){
+					pre.appendText('system: ' + JSON.stringify(data, null, '\r\t'), 'top');
+					pre.appendText('\n', 'top');
+				});
+			},
+			'state connect': function(state){
+				state.emit('get', function(data){
+					pre.appendText('state: ' + JSON.stringify(data, null, '\r\t'), 'top');
+					pre.appendText('\n', 'top');
+				});
+			},
+			'state set': function(path, value){
+				path = path.slice(0);
+				path.push(value);
+				pre.appendText('\n' + path.join(' '), 'top');
+			}
 		});
+
 	},
 
-	log: function(){
-		console.log(this, arguments);
+	readySetup: function(){
+		this.pre.inject(document.body);
 	}
 
 });

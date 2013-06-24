@@ -1,71 +1,42 @@
 new Unit({
 
-	element: new Element('button.btn.btn-mini[text="☉"][title=local]'),
+	options: {
+		resource: 'io'
+	},
 
 	readySetup: function(){
-		this.publish('tools add', this.element);
-		this.element.addEvent('click', this.onToggle.bind(this));
+		this.subscribe({
+			'socket toggle': this.toggle
+		});
 		this.connect();
 	},
 
-	socket: null,
+	io: null,
 
-	connect: function(uri){
-		var socket = this.socket = io.connect(uri, {
-			resource: 'io'
-		});
-		socket.on('connect', this.onConnect.bind(this));
-		socket.on('disconnect', this.onDisconnect.bind(this));
-		this.publish('planet connection', socket);
-
-		var system = this.system = io.connect('/system', {
-			resource: 'io'
-		});
-		system.on('connect', function(){
-			system.emit('get', function(system){
-				console.log('system socket!', system);
-			});
-		});
-
-		var state = this.system = io.connect('/state', {
-			resource: 'io'
-		});
-		state.on('connect', function(){
-			state.emit('get', function(state){
-				console.log('state socket!', state);
-			});
-		});
-	},
-
-	connected: false,
-
-	onConnect: function(){
-		this.connected = true;
-		this.element.set({'title': 'online', 'text': '☄'});
-		this.element.addClass('active');
-	//	this.publish('planet connect');
+	connect: function(){
+		var socket = this.io = io.connect(null, this.options);
+		socket.on('connect', this.publish.bind(this, 'socket connect', socket));
+		socket.on('disconnect', this.publish.bind(this, 'socket disconnect'));
 	},
 
 	disconnect: function(){
-		this.socket.disconnect();
-		this.socket.removeAllListeners();
-        this.socket.socket.removeAllListeners();
+		this.io.disconnect();
+	//	this.io.removeAllListeners();
+	//	this.io.socket.removeAllListeners();
 	},
 
-	onDisconnect: function(){
-		this.connected = false;
-		this.element.set({'title': 'local', 'text': '☉'});
-		this.element.removeClass('active');
-		this.publish('planet disconnect');
+	reconnect: function(){
+		this.io.socket.reconnect();
+		this.publish('socket reconnect', this.io);
 	},
 
-	onToggle: function(e){
-		e.preventDefault();
-		if (this.connected) this.disconnect();
-		else {
-			this.element.addClass('active');
-			this.socket.socket.reconnect();
-		}
+	isConnected: function(){
+		return !!this.io.socket.connected;
+	},
+
+	toggle: function(){
+		if (this.isConnected()) this.disconnect();
+		else this.reconnect();
 	}
 
 });

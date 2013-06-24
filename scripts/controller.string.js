@@ -3,30 +3,21 @@ Controller.String = new Class({
 	Extends: Controller,
 
 	initialize: function(data){
-		this.build(data);
-		this.element.addEvent('change', this.onChange.bind(this));
-	},
+		var element = this.element = new Element('input[type=text]');
 
-	build: function(data){
-		var label, wrapper, input;
-		this.parent();
+		this.value = '';
 
-		label = this.add('label.control-label', {
-			'text': data.label
-		});
-		wrapper = this.add('div.controls');
-		input = this.element = new Element('input.span12[type=text]');
-		wrapper.adopt(input);
+		if (data.placeholder != null) element.set('placeholder', data.placeholder);
 
-		if (data.placeholder) input.set('placeholder', data.placeholder);
+		element.addEvent('keyup', this.onChange.bind(this));
 	},
 
 	onChange: function(e){
-		this.fireEvent('quickchange', this.element.value);
+		if (this.value != this.element.value) this.fireEvent('quickchange', this.value = this.element.value);
 	},
 
 	set: function(value){
-		this.element.value = value;
+		this.value = this.element.value = value;
 		return this;
 	}
 
