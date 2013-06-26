@@ -5,9 +5,7 @@ new Unit({
 	},
 
 	readySetup: function(){
-		this.subscribe({
-			'socket toggle': this.toggle
-		});
+		this.subscribe('socket toggle', this.toggle);
 		this.connect();
 	},
 
@@ -17,6 +15,7 @@ new Unit({
 		var socket = this.io = io.connect(null, this.options);
 		socket.on('connect', this.publish.bind(this, 'socket connect', socket));
 		socket.on('disconnect', this.publish.bind(this, 'socket disconnect'));
+		socket.on('reconnect', this.publish.bind(this, 'socket reconnect'));
 	},
 
 	disconnect: function(){
@@ -27,7 +26,6 @@ new Unit({
 
 	reconnect: function(){
 		this.io.socket.reconnect();
-		this.publish('socket reconnect', this.io);
 	},
 
 	isConnected: function(){

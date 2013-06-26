@@ -2,15 +2,14 @@ new Unit({
 
 	element: new Element('div.system'),
 
-	button: new Element('button'),
+	button: new Element('button.float-left'),
 
 	readySetup: function(){
-		this.element.inject(document.body);
 
 		this.button.inject(this.element)
 			.set('text', 'conntecting')
 			.addEvent('click', this.toggle.bind(this));
-	
+
 		this.subscribe({
 			'socket connect': this.connect,
 			'socket disconnect': this.disconnect,
@@ -18,6 +17,8 @@ new Unit({
 			'system connect': this.ready,
 			'system add': this.add
 		});
+
+		this.element.inject(document.body);
 	},
 
 	system: null,

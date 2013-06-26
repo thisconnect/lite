@@ -2,7 +2,7 @@ Controller.Float = new Class({
 
 	Extends: Controller.Int,
 
-	type: 'input[type=range]',
+	selector: 'input[type=range]',
 
 	onChange: function(e){
 		this.fireEvent('quickchange', parseFloat(this.input.value));

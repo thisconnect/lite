@@ -2,8 +2,10 @@ Controller.Enum = new Class({
 
 	Extends: Controller,
 
+	selector: 'select',
+
 	initialize: function(data){
-		var select = this.select = new Element('select');
+		var select = this.select = new Element(this.selector);
 
 		this.addOptions(data.values);
 
@@ -15,6 +17,8 @@ Controller.Enum = new Class({
 			this.element = this.label;
 			select.inject(this.element);
 		}
+
+		this.set(data.value || data.values[0]);
 	},
 
 	addOptions: function(values){

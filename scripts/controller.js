@@ -39,11 +39,12 @@ Controller.Array = new Class({
 	Extends: Controller,
 
 	initialize: function(array, data){
+		this.element = new Element('div');
 		this.build(array, data);
 	},
 
 	build: function(array, data){
-		console.log(array[1], array[2].toInt(), data);
+		console.log(array[0], array[1], array[2].toInt(), data);
 		//new Controller[array[1]]();
 		//this.add(array[1]);
 	}

@@ -20,6 +20,7 @@ input[type=range].vertical {
 }
 
 pre {
+	clear: both;
 	height: 250px;
 	margin: 1em;
 	overflow: auto;
@@ -27,6 +28,14 @@ pre {
 
 label {
 	white-space: nowrap;
+}
+
+.float-left {
+	float: left;
+}
+
+.float-right {
+	float: right;
 }
 
 /* text selection */

@@ -2,14 +2,15 @@ Controller.String = new Class({
 
 	Extends: Controller,
 
+	selector: 'input[type=text]',
+
 	initialize: function(data){
-		var element = this.element = new Element('input[type=text]');
+		var input = this.element = new Element(this.selector);
 
-		this.value = '';
+		input.set('placeholder', data.placeholder || '');
+		input.addEvent('keyup', this.onChange.bind(this));
 
-		if (data.placeholder != null) element.set('placeholder', data.placeholder);
-
-		element.addEvent('keyup', this.onChange.bind(this));
+		this.set(data.value || '');
 	},
 
 	onChange: function(e){

@@ -1,5 +1,3 @@
-(function(){
-
 new Unit({
 
 	initSetup: function(){
@@ -13,6 +11,7 @@ new Unit({
 	create: function(id, data){
 		var widget = this.widgets[id]
 			|| (this.widgets[id] = new Widget2(id, data));
+
 		this.publish('system add', widget);
 	}
 
@@ -25,10 +24,9 @@ var Widget2 = new Class({
 	brakets: /(.*?)\[(.*?)\]/,
 
 	initialize: function(id, data){
-		var control = this.control.bind(this, id);
 		this.setupUnit();
-		this.id = id;
 		this.element = new Element('section');
+		var control = this.control.bind(this, id);
 		Object.forEach(data, control);
     },
 
@@ -42,20 +40,17 @@ var Widget2 = new Class({
 		return this;
 	},
 
-	control: function(id, data, name){
+	control: function(id, data, name, i){
 		var type = data.type.capitalize(),
 			array = type.match(this.brakets),
-			publish = this.publish.bind(this);
+			publish = this.publish.bind(this),
+			control = (!array
+				? new Controller[type](data)
+				: new Controller.Array(array, data));
 
-		(!array ? new Controller[type](data)
-				: new Controller.Array(array, data))
-			.attach(this.element)
-			.addEvent('quickchange', function(value){
-				console.log('quickchange', value);
-				publish('state set', [[id, name], value]);
-			});
+		control.addEvent('quickchange', function(value){
+			publish('state set', [[id, name], value]);
+		}).attach(this.element);
 	}
 
 });
-
-})();

@@ -2,8 +2,10 @@ Controller.Bool = new Class({
 
 	Extends: Controller,
 
+	selector: 'input[type=checkbox]',
+
 	initialize: function(data){
-		var input = this.input = new Element('input[type=checkbox]');
+		var input = this.input = new Element(this.selector);
 
 		input.addEvent('change', this.onChange.bind(this));
 
@@ -12,6 +14,8 @@ Controller.Bool = new Class({
 			this.element = this.label(data.label);
 			input.inject(this.element);
 		}
+
+		this.set(data.value || false);
 	},
 
 	onChange: function(){
