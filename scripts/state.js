@@ -2,27 +2,30 @@ new Unit({
 
 	element: new Element('div.state'),
 
-	readySetup: function(){
-		this.element.inject(document.body);
+	initSetup: function(){
 		this.subscribe({
-			'socket connect': this.setup,
-			'system connect': this.connect,
-			'state connect': this.ready,
+			'socket connect': this.prepare,
+			'system connect': this.setup,
+			'state connect': this.connect,
 			'state set': this.set,
 			'state remove': this.remove,
 			'state merge': this.merge
 		});
 	},
 
+	readySetup: function(){
+		this.element.inject(document.body);
+	},
+
 	io: null,
 
 	state: null,
 
-	setup: function(socket){
+	prepare: function(socket){
 		this.io = socket;
 	},
 
-	connect: function(){
+	setup: function(){
 		var state = this.state = this.io.of('/state');
 		state.on('set', this.onSet.bind(this));
 		state.on('remove', this.onRemove.bind(this));
@@ -30,9 +33,10 @@ new Unit({
 		state.once('connect', this.publish.bind(this, 'state connect', state));
 	},
 
-	ready: function(state){
+	connect: function(state){
 		var that = this;
 		state.emit('get', function(data){
+			console.log(data);
 	//		that.pre.set('text', 'state: ' + JSON.stringify(data, null, '\r\t'));
 		});
 	},

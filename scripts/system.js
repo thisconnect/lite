@@ -2,57 +2,43 @@ new Unit({
 
 	element: new Element('div.system'),
 
-	button: new Element('button.float-left'),
-
-	readySetup: function(){
-
-		this.button.inject(this.element)
-			.set('text', 'conntecting')
-			.addEvent('click', this.toggle.bind(this));
-
+	initSetup: function(){
 		this.subscribe({
-			'socket connect': this.connect,
+			'socket connect': this.setup,
 			'socket disconnect': this.disconnect,
-			'socket reconnect': this.reconnect,
-			'system connect': this.ready,
+			'system connect': this.connect,
 			'system add': this.add
 		});
+	},
 
+	readySetup: function(){
 		this.element.inject(document.body);
 	},
 
 	system: null,
 
-	connect: function(socket){
+	setup: function(socket){
 		var system = this.system = socket.of('/system'),
 			connect = this.publish.bind(this, 'system connect', system);
 
 		system.once('connect', connect);
 	},
 
-	disconnect: function(){
-		this.button.set('text', 'disconnected');
-	},
-
-	reconnect: function(socket){
-		this.button.set('text', 'reconnect');
-	},
-
-	ready: function(system){
+	connect: function(system){
 		var that = this;
-		system.emit('get', 'system', function(data){
+		this.publish('widget destroy', 'system');
+		system.emit('get', function(data){
 			that.publish('widget create', ['system', data]);
 		});
-		this.button.set('text', 'connected');
+	},
+
+	disconnect: function(){
+		//this.system.removeAllListeners();
+		//delete this.system;
 	},
 
 	add: function(widget){
-		widget.attach(this.element);
-	},
-
-	toggle: function(e){
-		e.preventDefault();
-		this.publish('socket toggle');
+		widget.inject(this.element);
 	}
 
 });

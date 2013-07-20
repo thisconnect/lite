@@ -2,7 +2,8 @@ new Unit({
 
 	initSetup: function(){
 		this.subscribe({
-			'widget create': this.create
+			'widget create': this.create,
+			'widget destroy': this.destroy
 		});
 	},
 
@@ -13,6 +14,12 @@ new Unit({
 			|| (this.widgets[id] = new Widget2(id, data));
 
 		this.publish('system add', widget);
+	},
+
+	destroy: function(id){
+		if (!this.widgets[id]) return;
+		this.widgets[id].destroy();
+		delete this.widgets[id];
 	}
 
 });
@@ -25,10 +32,23 @@ var Widget2 = new Class({
 
 	initialize: function(id, data){
 		this.setupUnit();
+		this.create(id, data);
+    },
+
+	create: function(id, data){
 		this.element = new Element('section');
 		var control = this.control.bind(this, id);
 		Object.forEach(data, control);
-    },
+	},
+
+	destroy: function(){
+		this.element.destroy();
+	},
+
+	inject: function(element, position){
+		this.element.inject(element, position || 'bottom');
+		return this;
+	},
 
 	attach: function(element, position){
 		this.element.inject(element, position || 'bottom');
@@ -40,17 +60,18 @@ var Widget2 = new Class({
 		return this;
 	},
 
-	control: function(id, data, name, i){
+	control: function(id, data, name){
 		var type = data.type.capitalize(),
 			array = type.match(this.brakets),
 			publish = this.publish.bind(this),
 			control = (!array
 				? new Controller[type](data)
-				: new Controller.Array(array, data));
+				: new Controller.Array(array, data)),
+			change = function(value){
+				publish('state set', [[id, name], value]);
+			};
 
-		control.addEvent('quickchange', function(value){
-			publish('state set', [[id, name], value]);
-		}).attach(this.element);
+		control.addEvent('quickchange', change).attach(this.element);
 	}
 
 });

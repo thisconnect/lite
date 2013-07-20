@@ -7,9 +7,19 @@ new Unit({
 
 		this.subscribe({
 			'socket connect': function(){
-				pre.set('text', '');
+				pre.appendText('socket connect', 'top');
+				pre.appendText('\n', 'top');
+			},
+			'socket disconnect': function(){
+				pre.set('text', '\nsocket disconnect');
+			},
+			'socket reconnect': function(){
+				pre.appendText('socket reconnect', 'top');
+				pre.appendText('\n', 'top');
 			},
 			'system connect': function(system){
+				pre.appendText('system connect', 'top');
+				pre.appendText('\n', 'top');
 				system.emit('get', function(data){
 					pre.appendText('system: ' + JSON.stringify(data, null, '\r\t'), 'top');
 					pre.appendText('\n', 'top');
