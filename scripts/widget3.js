@@ -3,7 +3,9 @@ new Unit({
 	initSetup: function(){
 		this.subscribe({
 			'widget create': this.create,
-			'widget destroy': this.destroy
+			'widget destroy': this.destroy,
+			'widget merge': this.merge,
+			'widget set': this.set
 		});
 	},
 
@@ -20,6 +22,18 @@ new Unit({
 		if (!this.widgets[id]) return;
 		this.widgets[id].destroy();
 		delete this.widgets[id];
+	},
+
+	merge: function(context, id, data){
+		for (var key in data){
+			if (!this.widgets[id]['controllers'][key]) continue;
+			this.widgets[id]['controllers'][key].set(data[key]);
+		}
+	},
+
+	set: function(path, value){
+		if (!this.widgets[path[0]]['controllers'][path[1]]) return;
+		this.widgets[path[0]]['controllers'][path[1]].set(value);
 	}
 
 });
@@ -44,11 +58,6 @@ var Widget3 = new Class({
 		this.element.destroy();
 	},
 
-	inject: function(element, position){
-		this.element.inject(element, position || 'bottom');
-		return this;
-	},
-
 	attach: function(element, position){
 		this.element.inject(element, position || 'bottom');
 		return this;
@@ -59,8 +68,9 @@ var Widget3 = new Class({
 		return this;
 	},
 
+	controllers: {},
+
 	control: function(id, data, name){
-		// console.log(id, data, name);
 		var type = data.type.capitalize(),
 			array = type.match(this.brakets),
 			publish = this.publish.bind(this),
@@ -68,11 +78,15 @@ var Widget3 = new Class({
 				? new Controller[type](data)
 				: new Controller.Array(array, data)),
 			change = function(value){
-				console.log(id, name, value);
+				//console.log(id, name, value);
 				publish('local set', [[id, name], value]);
 			};
 
 		control.addEvent('quickchange', change).attach(this.element);
+		this.controllers[name] = control;
+		//this.subscribe(id + ' change ' + name, function(value){
+		//	console.log(id + ' change ' + name, value);
+		//});
 	}
 
 });
