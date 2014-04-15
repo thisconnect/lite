@@ -28,6 +28,10 @@ pre {
 	overflow: auto;
 }
 
+.info {
+	padding: 1em;
+}
+
 label {
 	display: block;
 	margin: .84em 0;

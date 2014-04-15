@@ -7,16 +7,21 @@ new Unit({
 		, 'force new connection': true
 	},
 
-	button: new Element('button.float-left'),
+	bound: {},
 
 	initSetup: function(){
-		this.subscribe({
-			'socket connect': this.onConnect,
-			'socket disconnect': this.onDisconnect
-		});
+		this.bound = {
+			'onConnect': this.onConnect.bind(this),
+			'onDisconnect': this.onDisconnect.bind(this)
+		};
 	},
 
+	button: new Element('button'),
+
+	info: new Element('span.info'),
+
 	readySetup: function(){
+		this.info.inject(document.body, 'top');
 		this.button.addEvent('click', this.toggle.bind(this));
 		this.button.inject(document.body, 'top');
 		this.connect();
@@ -25,10 +30,11 @@ new Unit({
 	io: null,
 
 	connect: function(){
-		var socket = this.io = io.connect(null, this.options);
-		socket.on('connect', this.publish.bind(this, 'socket connect', socket));
-		socket.on('disconnect', this.publish.bind(this, 'socket disconnect'));
-		socket.on('reconnect', this.publish.bind(this, 'socket reconnect'));
+		(this.io = io.connect(null, this.options))
+		.on('connect', this.bound.onConnect)
+		.on('disconnect', this.bound.onDisconnect)
+		.on('reconnect', this.publish.bind(this, 'socket reconnect'));
+
 		this.button.set('text', 'conntecting');
 	},
 
@@ -51,11 +57,16 @@ new Unit({
 	},
 
 	onConnect: function(){
-		this.button.set('text', 'connected');
+		this.info.set('text', 'socket established ' + this.io.socket.options.host);
+		console.log(this.io);
+		this.button.set('text', 'disconnect');
+		this.publish('socket connect', this.io);
 	},
 
 	onDisconnect: function(){
-		this.button.set('text', 'disconnected');
+		this.info.set('text', ' disconnected');
+		this.button.set('text', 'connect');
+		this.publish('socket disconnect');
 	}
 
 });
