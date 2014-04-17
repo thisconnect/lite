@@ -1,30 +1,39 @@
 new Unit({
 
-	options: {
-		'resource': 'io'
-		, 'transports': ['websocket']
-		, 'try multiple transports': false
-		, 'force new connection': true
-	},
-
 	bound: {},
 
 	initSetup: function(){
 		this.bound = {
 			'onConnect': this.onConnect.bind(this),
-			'onDisconnect': this.onDisconnect.bind(this)
+			'onDisconnect': this.onDisconnect.bind(this),
+			'toggle': this.toggle.bind(this)
 		};
 	},
 
-	button: new Element('button'),
+	element: new Element('header'),
+
+	button: new Element('a[href="#connect"].float-right'),
 
 	info: new Element('span.info'),
 
+	warning: new Element('span.warning'),
+
 	readySetup: function(){
-		this.info.inject(document.body, 'top');
-		this.button.addEvent('click', this.toggle.bind(this));
-		this.button.inject(document.body, 'top');
+		this.button.addEvent('click', this.bound.toggle);
+		this.info.inject(this.element);
+		this.warning.inject(this.element);
+		this.element.appendText(' ');
+		this.button.inject(this.element);
+		this.element.appendText(' ');
+		this.element.inject(document.body);
 		this.connect();
+	},
+
+	options: {
+		'resource': 'io'
+		, 'transports': ['websocket']
+		, 'try multiple transports': false
+		, 'force new connection': true
 	},
 
 	io: null,
@@ -36,6 +45,7 @@ new Unit({
 		.on('reconnect', this.publish.bind(this, 'socket reconnect'));
 
 		this.button.set('text', 'conntecting');
+		this.info.set('text', ' trying to connect');
 	},
 
 	disconnect: function(){
@@ -57,15 +67,23 @@ new Unit({
 	},
 
 	onConnect: function(){
-		this.info.set('text', 'socket established ' + this.io.socket.options.host);
-		console.log(this.io);
+		this.info.set('text',
+			'connected to '
+			+ this.io.socket.options.host
+			+ ':' + this.io.socket.options.port
+		);
+
+		this.warning.set('text', '');
 		this.button.set('text', 'disconnect');
+
 		this.publish('socket connect', this.io);
 	},
 
 	onDisconnect: function(){
-		this.info.set('text', ' disconnected');
+		this.info.set('text', '');
+		this.warning.set('text', 'oh no, connection lost!');
 		this.button.set('text', 'connect');
+
 		this.publish('socket disconnect');
 	}
 
