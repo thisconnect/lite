@@ -20,7 +20,7 @@ var Controller = new Class({
 		if (data.config.enable) this.setupEnable(widget, data.config.enable);
 		if (data.config.disable) this.setupDisable(widget, data.config.disable);
 
-		this.set(data.value);
+		// this.set(data.value);
 
 		// widget.addEvent('destroy', this.destroy);
 
@@ -90,11 +90,15 @@ var Controller = new Class({
 	},
 
 	enable: function(){
-		this.element.removeClass('disabled');
+		this.element.removeClass('disabled')
+			.getElements('button, input, select, textarea')
+			.removeProperty('disabled');
 	},
 
 	disable: function(){
-		this.element.addClass('disabled');
+		this.element.addClass('disabled')
+			.getElements('button, input, select, textarea')
+			.setProperty('disabled', true);
 	}
 
 });
