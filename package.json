@@ -6,7 +6,7 @@
 		{"name": "Enrique Erne"}
 	]
 	, "devDependencies": {
-		"wrapup": "1.0.3"
+		"wrapup": "1.0.6"
 		, "uglify-js": "v2.4.14"
 	}
 }
