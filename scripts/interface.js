@@ -41,6 +41,7 @@ new Unit({
 			.on('remove', this.bound.onRemove);
 
 		this.bound.set = socket.emit.bind(socket, 'set');
+		this.bound.merge = socket.emit.bind(socket, 'merge');
 		this.then();
 	},
 
@@ -88,12 +89,14 @@ new Unit({
 
 	onSet: function(key, value){
 		if (typeof key == 'string'){
-			// console.log('onSet', key, value);
+			//console.log('onSet', key, value);
 			this.addWidget('state', key);
 			this.publish('state ' + key + ' build', value);
 			this.publish('state ' + key + ' merge', value);
 		} else {
 			// console.log('onSet', key[0] + ' set', [key.slice(1).join('.'), value].join(' '));
+			// console.log('onSet', key[0] + ' set', key.slice(1));
+			// console.log('onSet', key[0] + ' set', value);
 			this.publish('state ' + key[0] + ' set', [key.slice(1), value]);
 		}
 	},
@@ -110,7 +113,7 @@ new Unit({
 	onMerge: function(data){
 		console.log('onMerge', data);
 		for (var widget in data){
-			this.publish('state ' + widget + ' build', data[widget]);
+			// this.publish('state ' + widget + ' build', data[widget]);
 			this.publish('state ' + widget + ' merge', data[widget]);
 		}
 	},
@@ -124,21 +127,19 @@ new Unit({
 			unsubscribe = this.unsubscribe.bind(this),
 			id = context + ' ' + name;
 
-console.log('_______ addWidget', this.schema[name]);
-
 		function set(path, value){
 			var parent = path.slice(0),
 				key = parent.pop();
 
-			// console.log('_____set', parent.join(' '), {'key': key, 'value': value});
+			console.log('_____set', parent.join(' '), {'key': key, 'value': value});
 			widget.fireEvent(parent.join(' '), {'key': key, 'value': value});
 
-			// console.log('_____set', path.join(' '), value);
+			console.log('_____set', path.join(' '), value);
 			widget.fireEvent(path.join(' '), value);
 		}
 
 		function merge(values, path){
-			// console.log(path, values);
+			console.log('M.E.R.G.E', path, values);
 			for (var key in values){
 				if (!values.hasOwnProperty(key)) continue;
 
@@ -163,9 +164,7 @@ console.log('_______ addWidget', this.schema[name]);
 
 		widget.addEvent('change', this.bound.set);
 		widget.addEvent('set', this.bound.set);
-		// widget.addEvent('change', this.set.bind(this));
-		// widget.addEvent('set', this.set.bind(this));
-		// widget.addEvent('get', this.get.bind(this));
+		widget.addEvent('merge', this.bound.merge);
 		widget.addEvent('remove', this.remove.bind(this, name));
 
 		this.subscribe(id + ' build', build);

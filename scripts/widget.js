@@ -38,20 +38,21 @@ var Widget = new Class({
 
 	build: function(data, values){
 		var schema = data.schema;
-
-		if (!data.path && schema.type == 'array') console.log(this.id, data, schema);
+if (!!data.path) console.log('widget.build ???????', data.path.join('.'), JSON.stringify(values));
+		// if (!data.path && schema.type == 'array') console.log(this.id, data, schema);
 
 		// if (!!values.$type) console.log(data.path.join('.'), values.$type);
 
-		if (!data.path) this.addControl(this.id, {
+		if (!data.path){
+			this.addControl(this.id, {
 				'schema': schema
 				, 'element': this.element
 				, 'path': []
 				, 'value': values
 			});
-		else {
+		} else {
 
-			if (!!values.$type) schema = this.getDefinition('#/definitions/' + values.$type);
+			if (!!values.$type) schema = this.getDefinition('#/definitions/' + values.$type).schema;
 			//console.log('====', data.path.join('.'), values.$type, data);
 
 			// if (!!values.$type) console.log('???', values.$type, schema);
@@ -59,7 +60,7 @@ var Widget = new Class({
 			for (var key in values){
 				if (!values.hasOwnProperty(key)) continue;
 
-				// console.log('>>>', key, schema.items || properties[key]);
+				// console.log('>>>', key, schema.items || schema.properties[key]);
 
 				this.addControl(key, {
 					'schema': schema.items || (schema.properties && schema.properties[key]) || {}
@@ -74,13 +75,17 @@ var Widget = new Class({
 	},
 
 	addControl: function(key, data){
-		// if (key == '$type') console.log('-----', data.path.join('.'), data);
+		console.log('?=?=?=?', key, data.value);
 
-		// if (!!data.schema.oneOf) console.log('oneOf', key, data);
 		if (!!data.schema.$ref){
 			// console.log('$ref', key, data.schema);
-			data.schema = this.getDefinition(data.schema.$ref);
-			return this.addControl(key, data);
+			data.schema = this.getDefinition(data.schema.$ref).schema;
+			// return this.addControl(key, data);
+		}
+		if (!!data.value && !!data.value.$type && !!data.schema.anyOf){
+			console.log('GET anyOf BY $type!!', key, data);
+			// data.schema = this.getDefinition('#/definitions/' + data.value.$type).schema;
+			// console.log(data.schema);
 		}
 		var type = data.schema.type
 			|| (Array.isArray(data.value) && 'array')
@@ -91,19 +96,34 @@ var Widget = new Class({
 		return new Controller[type](key, data, this);
 	},
 
-	getDefinition: function(pointer){
-		var path = pointer.split('#/')[1].split('/');
-
-		function get(schema, path){
-			for (var i = 0, l = path.length; i < l; i++){
-				if (hasOwnProperty.call(schema, path[i])) schema = schema[path[i]];
-				else return schema[path[i]];
-			}
-			return schema;
+	get: function(path){
+		var schema = this.schema;
+		for (var i = 0, l = path.length; i < l; i++){
+			if (hasOwnProperty.call(schema, path[i])) schema = schema[path[i]];
+			else return schema[path[i]];
 		}
+		return schema;
+	},
 
-		// console.log(path.join('.'), this.schema);
-		return get(this.schema, path);
+	getDefinition: function(ref){
+		var path = ref.split('#/')[1].split('/');
+		return {
+			name: path[path.length - 1],
+			schema: this.get(path)
+		};
+	},
+
+	getDefault: function(ref){
+		var definition = this.getDefinition(ref),
+			schema = definition.schema,
+			defaults = {
+				'$type': definition.name
+			}; // schema.type
+
+		for (var key in schema.properties){
+			if (key != '$type') defaults[key] = schema.properties[key].default;
+		}
+		return defaults;
 	},
 
 	attach: function(element, position){
